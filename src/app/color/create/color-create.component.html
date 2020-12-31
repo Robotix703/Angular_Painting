@@ -1,0 +1,28 @@
+<h2>Création Couleur</h2>
+
+<!--Balise permettant l'utilisation du module card-->
+<mat-card>
+  <!--Utilisation de la balise Form pour simplifier la récupération d'informations par Angular-->
+  <!--On indique l'opération à faire lors de l'événement submit-->
+  <!--On passe en paramètre les données du formulaire géré par angular via ngForm-->
+  <form [formGroup]="formulaire" (submit)="onSaveInstruction()">
+    <!--Nom-->
+    <mat-form-field>
+      <input matInput formControlName="name" type="text" placeholder="Nom">
+      <mat-error *ngIf="formulaire.get('name').invalid">Entrez un nom</mat-error>
+    </mat-form-field>
+
+    <!--Gamme-->
+    <input type="text" style="margin-bottom: 10px;" placeholder="Gamme" aria-label="Number" matInput
+      formControlName="gamme" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <!--Imput-->
+    <button mat-raised-button color="primary" type="submit">Save Instruction
+    </button>
+  </form>
+</mat-card>

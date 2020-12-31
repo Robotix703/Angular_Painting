@@ -1,0 +1,19 @@
+<mat-accordion *ngIf="colors.length > 0">
+  <!--Conteneur des tuiles par figurines-->
+  <mat-card *ngFor="let color of colors">
+    <!--Header-->
+    <mat-card-title>
+      {{ color.name }}
+    </mat-card-title>
+    <!--Gamme-->
+    <mat-dialog-content>
+      {{ color.gamme }}
+      <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/color/edit', color.id]">Edit</a>
+      <button mat-button color="warn" (click)="onDelete(color.id)">Delete</button>
+    </mat-dialog-content>
+  </mat-card>
+</mat-accordion>
+
+<p class="info-text mat-body-1" *ngIf="colors.length == 0">Aucune Couleurs</p>
+
+<a mat-button color="secondary" [routerLink]="['/color/create']">Ajouter Couleur</a>

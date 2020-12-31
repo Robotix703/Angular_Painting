@@ -1,0 +1,37 @@
+<h2>Création figurine</h2>
+
+<!--Balise permettant l'utilisation du module card-->
+<mat-card>
+  <!--Utilisation de la balise Form pour simplifier la récupération d'informations par Angular-->
+  <!--On indique l'opération à faire lors de l'événement submit-->
+  <!--On passe en paramètre les données du formulaire géré par angular via ngForm-->
+  <form [formGroup]="formulaire" (submit)="onSavePost()">
+    <!--Nom-->
+    <mat-form-field>
+      <input matInput type="text" formControlName='name' placeholder="Nom">
+      <mat-error *ngIf="formulaire.get('name').invalid">Entrez un nom</mat-error>
+    </mat-form-field>
+
+    <!--Catégorie-->
+    <mat-form-field>
+      <input matInput type="text" formControlName='categorie' placeholder="Catégorie">
+      <mat-error *ngIf="formulaire.get('categorie').invalid">Entrez une catégorie</mat-error>
+    </mat-form-field>
+
+    <!--Bouton ajout fichier-->
+    <div>
+      <button mat-stroked-button type="button" (click)=filePicker.click()>Image</button>
+      <!--Lors de la sélection d'une image on active la fonction onImagePicked avec l'élément courant du DOM-->
+      <input type=file #filePicker (change)="onImagePicked($event)">
+    </div>
+
+    <!--Preview de l'image-->
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview !== null">
+      <img [src]="imagePreview" [alt]="formulaire.value.name">
+    </div>
+
+    <!--Imput-->
+    <button mat-raised-button color="primary" type="submit">Save Figurine
+    </button>
+  </form>
+</mat-card>

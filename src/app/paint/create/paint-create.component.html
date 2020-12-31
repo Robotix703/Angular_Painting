@@ -1,0 +1,48 @@
+<h2>Création Instruction</h2>
+
+<!--Balise permettant l'utilisation du module card-->
+<mat-card>
+  <!--Utilisation de la balise Form pour simplifier la récupération d'informations par Angular-->
+  <!--On indique l'opération à faire lors de l'événement submit-->
+  <!--On passe en paramètre les données du formulaire géré par angular via ngForm-->
+  <form [formGroup]="formulaire" (submit)="onSaveInstruction()">
+    <!--Nom-->
+    <mat-form-field>
+      <input matInput formControlName="name" type="text" placeholder="Nom">
+      <mat-error *ngIf="formulaire.get('name').invalid">Entrez un nom</mat-error>
+    </mat-form-field>
+
+    <!--Content-->
+    <mat-form-field>
+      <!--Lien vers une propriété-->
+      <!--ngModel : Propriété bidirectionnelle liée à enteredContent-->
+      <textarea matInput rows="6" formControlName="content" placeholder="Contenu">
+      </textarea>
+      <mat-error *ngIf="formulaire.get('content').invalid">Entrez une instruction</mat-error>
+    </mat-form-field>
+
+    <!--Choix des couleurs-->
+    <mat-form-field class="example-chip-list">
+      <mat-label>Couleurs</mat-label>
+      <mat-chip-list #chipList aria-label="Selection de la peinture">
+        <mat-chip *ngFor="let couleur of couleurs" [selectable]="selectable" [removable]="removable"
+          (removed)="remove(couleur)">
+          {{couleur}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Nouvelle couleur..." #couleurInput [formControl]="couleurCtrl" [matAutocomplete]="auto"
+          [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let fruit of filteredCouleurs | async" [value]="fruit">
+          {{fruit}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <!--Imput-->
+    <button mat-raised-button color="primary" type="submit">Save Instruction
+    </button>
+  </form>
+</mat-card>

@@ -1,0 +1,32 @@
+<mat-accordion *ngIf="figurines.length > 0 && !isLoading">
+  <!--Conteneur des tuiles par figurines-->
+  <mat-card *ngFor="let figurine of figurines">
+    <!--Header-->
+    <mat-card-header>
+      <!--Titre-->
+      <mat-card-title>
+        {{ figurine.name }}
+      </mat-card-title>
+
+      <!--Sous titre-->
+      <mat-card-subtitle>
+        {{ figurine.categorie }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <!--Image-->
+    <!--Image-->
+    <div class="figurine-image">
+      <img [src]="figurine.imagePath" [alt]="figurine.name">
+    </div>
+
+    <!--Boutons d'actions-->
+    <mat-card-actions>
+      <a mat-button color="primary" [routerLink]="['/paint', figurine.id]">Peindre</a>
+      <a mat-button color="secondary" [routerLink]="['/edit', figurine.id]">Edit</a>
+      <button mat-button color="warn" (click)="onDelete(figurine.id)">Delete</button>
+    </mat-card-actions>
+  </mat-card>
+</mat-accordion>
+
+<p class="info-text mat-body-1" *ngIf="figurines.length == 0">Aucune Fgurine</p>
