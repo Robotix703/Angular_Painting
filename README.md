@@ -38,4 +38,4 @@ ng add @angular/material
 
     sudo docker run --name myangular -d -p 4200:80 angular_decouverte
 
-    docker run --name angular_painting -p 8082:80 robotix703/angular_painting
+    docker run --name angular_painting -p 8082:80 robotix703/angular_painting:latest &
