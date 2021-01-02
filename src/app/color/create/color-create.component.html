@@ -12,14 +12,31 @@
       <mat-error *ngIf="formulaire.get('name').invalid">Entrez un nom</mat-error>
     </mat-form-field>
 
+    <!--ColorCode-->
+    <mat-form-field>
+      <input matInput formControlName="colorCode" type="text" placeholder="Code Couleur">
+      <mat-error *ngIf="formulaire.get('colorCode').invalid">Entrez un code couleur</mat-error>
+    </mat-form-field>
+
     <!--Gamme-->
     <input type="text" style="margin-bottom: 10px;" placeholder="Gamme" aria-label="Number" matInput
-      formControlName="gamme" [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
+      formControlName="gamme" [matAutocomplete]="autoGamme">
+    <mat-autocomplete autoActiveFirstOption #autoGamme="matAutocomplete">
+      <mat-option *ngFor="let gamme of filteredGamme | async" [value]="gamme">
+        {{gamme}}
       </mat-option>
     </mat-autocomplete>
+
+    <!--Type-->
+    <input type="text" style="margin-bottom: 10px;" placeholder="Type" aria-label="Number" matInput
+      formControlName="type" [matAutocomplete]="autoType">
+    <mat-autocomplete autoActiveFirstOption #autoType="matAutocomplete">
+      <mat-option *ngFor="let type of filteredTypes | async" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <hr>
 
     <!--Imput-->
     <button mat-raised-button color="primary" type="submit">Sauvegarder Couleur

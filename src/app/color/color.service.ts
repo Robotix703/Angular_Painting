@@ -24,11 +24,13 @@ export class ColorsService {
   constructor(private http: HttpClient, private router: Router) { }
 
   //Ecriture d'une couleur
-  writeColor(name: string, gamme: string) {
+  writeColor(name: string, gamme: string, type: string, colorCode: string) {
     //Stockage image et données
     const colorData = {
       name: name,
-      gamme: gamme
+      gamme: gamme,
+      type: type,
+      colorCode: colorCode
     }
 
     //Requête POST
@@ -60,7 +62,9 @@ export class ColorsService {
             return {
               id: color._id,
               name: color.name,
-              gamme: color.gamme
+              gamme: color.gamme,
+              type: color.type,
+              colorCode: color.colorCode
             }
           })
         }

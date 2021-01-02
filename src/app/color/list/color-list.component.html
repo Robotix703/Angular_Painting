@@ -5,9 +5,9 @@
     <mat-card-title>
       {{ color.name }}
     </mat-card-title>
-    <!--Gamme-->
+    <!--Gamme et type-->
     <mat-dialog-content>
-      {{ color.gamme }}
+      {{ color.gamme }} - {{ color.type }}
       <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/color/edit', color.id]">Edit</a>
       <button mat-button color="warn" (click)="onDelete(color.id)">Delete</button>
     </mat-dialog-content>

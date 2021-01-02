@@ -35,21 +35,36 @@ export class ColorCreateComponent implements OnInit {
   constructor(public ColorsService: ColorsService, public route: ActivatedRoute) { }
 
   //Gestion des options
-  options: string[] = ['Citadel', 'Army Painter'];
-  filteredOptions: Observable<string[]>;
+  gammes: string[] = ['Citadel', 'Army Painter'];
+  filteredGamme: Observable<string[]>;
 
-  private _filter(value: string): string[] {
+  types: string[] = ['Air', 'Dry', 'Base', 'Layer', 'Contrast'];
+  filteredTypes: Observable<string[]>;
+
+  private _filterGammes(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.gammes.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private _filterTypes(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.types.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   ngOnInit() {
 
     //Chargement des gammes
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredGamme = this.myControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value))
+      map(value => this._filterGammes(value))
+    );
+
+    //Chargement des types
+    this.filteredTypes = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterTypes(value))
     );
 
     //Initialisation du formulaire
@@ -58,6 +73,12 @@ export class ColorCreateComponent implements OnInit {
         validators: [Validators.required, Validators.minLength(3)]
       }),
       gamme: new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      type: new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      colorCode: new FormControl(null, {
         validators: [Validators.required]
       })
     });
@@ -71,6 +92,6 @@ export class ColorCreateComponent implements OnInit {
     }
 
     //Publication de la couleur
-    this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme);
+    this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode);
   }
 }

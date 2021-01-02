@@ -6,4 +6,8 @@ export interface Color {
   name: string;
   //Gamme de peinture
   gamme: string;
+  //Type de peinture
+  type: string;
+  //Code couleur
+  colorCode: string;
 }
