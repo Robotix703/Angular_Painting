@@ -6,6 +6,16 @@
       {{ instruc.name }}
     </mat-card-title>
 
+    <!--Paragraphe-->
+    <mat-dialog-content>
+      {{ instruc.content }}
+    </mat-dialog-content>
+
+    <a mat-button color="secondary" [routerLink]="['/instruction/edit', instruc.id]">Edit</a>
+    <button mat-button color="warn" (click)="onDelete(instruc.id)">Delete</button>
+
+    <hr>
+
     <!--Liste des peintures-->
     <table mat-table [dataSource]="instruc.paintColor" class="mat-elevation-z8">
       <!-- Name Column -->
@@ -23,14 +33,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
-    <!--Paragraphe-->
-    <mat-dialog-content>
-      {{ instruc.content }}
-    </mat-dialog-content>
-
-    <a mat-button color="secondary" [routerLink]="['/instruction/edit', instruc.id]">Edit</a>
-    <button mat-button color="warn" (click)="onDelete(instruc.id)">Delete</button>
   </mat-card>
 </mat-accordion>
 
