@@ -8,6 +8,4 @@ export interface Figurine {
   categorie: string;
   //Chemin vers l'image
   imagePath: string;
-  //Créateur
-  creator: string;
 }

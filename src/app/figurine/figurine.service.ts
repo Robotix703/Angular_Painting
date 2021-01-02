@@ -37,8 +37,7 @@ export class FigurinesService {
               id: figurine._id,
               name: figurine.name,
               categorie: figurine.categorie,
-              imagePath: figurine.imagePath,
-              creator: figurine.creator
+              imagePath: figurine.imagePath
             }
           }),
           maxFigurines: data.maxFigurines
@@ -93,7 +92,7 @@ export class FigurinesService {
     }
     else {
       //Il n'y a que du text
-      figurineData = { id: id, name: name, categorie: categorie, imagePath: image, creator: null };
+      figurineData = { id: id, name: name, categorie: categorie, imagePath: image };
     }
 
     //Appel AJAX

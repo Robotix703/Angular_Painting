@@ -62,8 +62,7 @@ export class FigurineCreateComponent implements OnInit {
             id: figurineData._id,
             name: figurineData.name,
             categorie: figurineData.categorie,
-            imagePath: figurineData.imagePath,
-            creator: figurineData.creator
+            imagePath: figurineData.imagePath
           }
 
           //MAJ du formulaire
