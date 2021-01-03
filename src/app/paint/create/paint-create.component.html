@@ -12,6 +12,12 @@
       <mat-error *ngIf="formulaire.get('name').invalid">Entrez un nom</mat-error>
     </mat-form-field>
 
+    <!--Etape-->
+    <mat-form-field>
+      <input matInput formControlName="step" type="number" placeholder="Etape">
+      <mat-error *ngIf="formulaire.get('step').invalid">Entrez une étape</mat-error>
+    </mat-form-field>
+
     <!--Content-->
     <mat-form-field>
       <!--Lien vers une propriété-->

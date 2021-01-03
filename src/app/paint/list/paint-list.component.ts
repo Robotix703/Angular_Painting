@@ -58,6 +58,16 @@ export class PaintListComponent implements OnInit, OnDestroy {
   //dataSource = ELEMENT_DATA;
   dataSource = [];
 
+  compare = function(a, b){
+    if ( a.step < b.step ){
+      return -1;
+    }
+    if ( a.step > b.step ){
+      return 1;
+    }
+    return 0;
+  }
+
   //Exécuté à l'init
   ngOnInit() {
     //Demande de récupération des figurines
@@ -73,7 +83,7 @@ export class PaintListComponent implements OnInit, OnDestroy {
     this.instructionsSub = this.paintService.getInstructionUpdateListener()
       .subscribe((instructionData: { instructions: Instruction[], maxInstruction: number }) => {
         //Récupération des posts
-        this.instructions = instructionData.instructions;
+        this.instructions = instructionData.instructions.sort(this.compare);
         //MAJ du nombre max de posts
         this.totalInstructions = instructionData.maxInstruction;
 

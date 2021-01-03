@@ -58,7 +58,7 @@ export class PaintCreateComponent implements OnInit {
   constructor(public PaintsService: PaintsService, public ColorsService: ColorsService, public route: ActivatedRoute) {
     this.filteredCouleurs = this.couleurCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allCouleurs.slice()));
+      map((color: string | null) => color ? this._filter(color) : this.allCouleurs.slice()));
   }
 
   //Ajoute un élément sélectionné
@@ -108,6 +108,9 @@ export class PaintCreateComponent implements OnInit {
       }),
       content: new FormControl(null, {
         validators: [Validators.required]
+      }),
+      step: new FormControl(null, {
+        validators: [Validators.required]
       })
     });
 
@@ -145,6 +148,6 @@ export class PaintCreateComponent implements OnInit {
       colorsID.push(this.colors[this.colors.findIndex(o => o.name === this.couleurs[i])].id);
     }
 
-    this.PaintsService.writeInstruction(this.formulaire.value.name, this.formulaire.value.content, this.figurineID, colorsID);
+    this.PaintsService.writeInstruction(this.formulaire.value.name, this.formulaire.value.content, this.figurineID, colorsID, this.formulaire.value.step);
   }
 }

@@ -30,7 +30,7 @@ export class PaintsService {
 
   //Récupération des instructions
   getInstructions(figurineID: string) {
-
+    //Construction query
     const queryParams = `?figurineID=${figurineID}`;
 
     //Récupération des instructions
@@ -45,7 +45,7 @@ export class PaintsService {
               name: instruction.name,
               content: instruction.content,
               paintID: instruction.paintID,
-              creator: instruction.creator
+              step: instruction.step
             }
           })
         }
@@ -57,13 +57,14 @@ export class PaintsService {
   }
 
   //Sauvegarde d'une instruction
-  writeInstruction(name: string, content: string, figurineID: string, paintID: string[]) {
+  writeInstruction(name: string, content: string, figurineID: string, paintID: string[], step: number) {
     //Stockage image et données
     const instructionData = {
       name: name,
       content: content,
       figurineID: figurineID,
-      paintID: paintID
+      paintID: paintID,
+      step: step
     }
 
     //Requête POST
@@ -82,19 +83,19 @@ export class PaintsService {
 
   //Récupération d'une instruction
   getInstruction(id: string) {
-    return this.http.get<{ _id: string, name: string, content: string, figurineID: string, paintID: [string] }>(URL_BACKEND + id);
+    return this.http.get<{ _id: string, name: string, content: string, figurineID: string, paintID: [string], step: number }>(URL_BACKEND + id);
   }
 
   //MAJ instruction
-  updateInstruction(id: string, name: string, content: string, figurineID: string, paintID: [string]) {
-
+  updateInstruction(id: string, name: string, content: string, figurineID: string, paintID: string[], step: number) {
     //Initialisation
     let instructionData = {
       id: id,
       name: name,
       content: content,
       figurineID: figurineID,
-      paintID: paintID
+      paintID: paintID,
+      step: step
     }
 
     //Appel AJAX

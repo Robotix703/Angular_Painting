@@ -10,4 +10,6 @@ export interface Instruction {
   content: string;
   //Liste des peintures
   paintID: string[];
+  //Etape
+  step: number;
 }
