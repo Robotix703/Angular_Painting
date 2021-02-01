@@ -2,7 +2,11 @@
   <!--Recherche figurine-->
   <mat-form-field appearance="fill">
     <mat-label>Nom Couleur</mat-label>
-    <input matInput placeholder="Recherche">
+    <input
+      matInput
+      placeholder="Recherche"
+      id="search"
+      (keyup)="search($event)">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 

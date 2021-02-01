@@ -59,7 +59,6 @@ export class ColorListComponent implements OnInit, OnDestroy {
       .subscribe((colorData: { color: Color[] }) => {
         //Récupération des posts
         this.colors = colorData.color;
-        console.log(this.colors)
       })
 
     //Première mise à jour de l'état de connexion
@@ -100,5 +99,11 @@ export class ColorListComponent implements OnInit, OnDestroy {
     this.l_type = type;
    //Demande récupération des couleurs via les filtres
    this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
+  }
+
+  //Recherche
+  search(event){
+    //Appel service
+    this.colorService.getColorsName(event.target.value);
   }
 }

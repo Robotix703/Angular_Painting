@@ -102,6 +102,33 @@ export class ColorsService {
       });
   }
 
+  //Récupération des couleurs via le nom
+  getColorsName(name: string) {
+    //Construction query
+    const queryParams = `nom?nom=${name}`;
+
+    //Récupération des couleurs
+    this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)
+      //Ajout d'une opération sur les données
+      .pipe(map((data) => {
+        return {
+          colors: data.Colors.map(color => {
+            return {
+              id: color._id,
+              name: color.name,
+              gamme: color.gamme,
+              type: color.type,
+              colorCode: color.colorCode
+            }
+          })
+        }
+      }))
+      .subscribe((transformedColor) => {
+        this.color = transformedColor.colors;
+        this.colorUpdated.next({ color: [...this.color] });
+      });
+  }
+
   //Demande de destruction des données au niveau de la BDD
   deleteColor(colorID: string) {
     //Requête DELTE
