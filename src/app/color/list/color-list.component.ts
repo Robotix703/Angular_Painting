@@ -1,5 +1,5 @@
 // Importation de l'outil composant de Angular
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, ParamMap, Router, RouterModule } from '@angular/router';
 
 //gestion des abonnements
@@ -33,16 +33,24 @@ export class ColorListComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   userId = null;
 
+  showFiller = true;
+
+  //Système de filtre
+  l_gamme = "";
+  l_type = "";
+
   //Abonnement
   private authStatusSub: Subscription;
   private colorsSub: Subscription;
 
   //Créé un membre de la classe de type ColorService
-  constructor(private colorService: ColorsService, private authService: AuthService, public route: ActivatedRoute) { }
+  constructor(private colorService: ColorsService,
+    private authService: AuthService,
+    public route: ActivatedRoute,
+    private cdr: ChangeDetectorRef) { }
 
   //Exécuté à l'init
   ngOnInit() {
-
     //Demande récupération des couleurs
     this.colorService.getColors();
 
@@ -51,6 +59,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
       .subscribe((colorData: { color: Color[] }) => {
         //Récupération des posts
         this.colors = colorData.color;
+        console.log(this.colors)
       })
 
     //Première mise à jour de l'état de connexion
@@ -75,5 +84,21 @@ export class ColorListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     //Désabonnement
     this.authStatusSub.unsubscribe();
+  }
+
+  //Selection d'une gamme
+  selectGamme(gamme: string){
+    //MAJ gamme
+    this.l_gamme = gamme;
+    //Demande récupération des couleurs via les filtres
+    this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
+  }
+
+  //Selection d'un type
+  selectType(type: string){
+    //MAJ type
+    this.l_type = type;
+   //Demande récupération des couleurs via les filtres
+   this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
   }
 }

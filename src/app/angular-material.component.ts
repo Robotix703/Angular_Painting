@@ -13,6 +13,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
+
 @NgModule({
     exports: [
         MatPaginatorModule,
@@ -27,7 +30,9 @@ import { MatTableModule } from '@angular/material/table';
         MatAutocompleteModule,
         MatChipsModule,
         MatIconModule,
-        MatTableModule
+        MatTableModule,
+        MatSidenavModule,
+        MatSelectModule
     ]
 })
 

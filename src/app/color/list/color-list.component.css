@@ -23,3 +23,14 @@ mat-card {
   left: 5px;
   top: 5px;
 }
+
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav {
+  padding: 20px;
+}

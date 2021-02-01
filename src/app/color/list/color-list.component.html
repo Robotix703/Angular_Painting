@@ -1,19 +1,64 @@
-<mat-accordion *ngIf="colors.length > 0">
-  <!--Conteneur des tuiles par figurines-->
-  <mat-card *ngFor="let color of colors">
-    <!--Header-->
-    <mat-card-title>
-      {{ color.name }}
-    </mat-card-title>
-    <!--Gamme et type-->
-    <mat-dialog-content>
-      {{ color.gamme }} - {{ color.type }}
-      <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/color/edit', color.id]">Edit</a>
-      <button mat-button color="warn" (click)="onDelete(color.id)">Delete</button>
-    </mat-dialog-content>
-  </mat-card>
-</mat-accordion>
+<div class="sidenav-content">
+  <!--Recherche figurine-->
+  <mat-form-field appearance="fill">
+    <mat-label>Nom Couleur</mat-label>
+    <input matInput placeholder="Recherche">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
 
-<p class="info-text mat-body-1" *ngIf="colors.length == 0">Aucune Couleurs</p>
+  <!--Filtre-->
+  <button type="button" mat-button (click)="drawer.toggle()">
+    Filtres
+  </button>
+</div>
 
-<a mat-button color="secondary" [routerLink]="['/color/create']">Ajouter Couleur</a>
+<mat-drawer-container class="container" autosize>
+  <mat-accordion *ngIf="colors.length > 0">
+    <!--Conteneur des tuiles par figurines-->
+    <mat-card *ngFor="let color of colors">
+      <!--Header-->
+      <mat-card-title>
+        {{ color.name }}
+      </mat-card-title>
+      <!--Gamme et type-->
+      <mat-dialog-content>
+        {{ color.gamme }} - {{ color.type }}
+        <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/color/edit', color.id]">Edit</a>
+        <button mat-button color="warn" (click)="onDelete(color.id)">Delete</button>
+      </mat-dialog-content>
+    </mat-card>
+  </mat-accordion>
+
+  <p class="info-text mat-body-1" *ngIf="colors.length == 0">Aucune Couleurs</p>
+
+  <a mat-button color="secondary" [routerLink]="['/color/create']">Ajouter Couleur</a>
+
+  <!--Remplissage-->
+  <mat-accordion *ngIf="colors.length <= 1">
+    <div style="visibility: hidden;">
+      <p style="height: 200px;">REMPLISSAGE</p>
+    </div>
+  </mat-accordion>
+
+  <!--Sidebare-->
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <!--Gamme-->
+    <h4>Gamme</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Selectionner une gamme</mat-label>
+      <mat-select #gammeValue (selectionChange)="selectGamme($event.value)">
+        <mat-option value="Citadel">Citadel</mat-option>
+        <mat-option value="Army Painter">Army Painter</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--Type-->
+    <h4>Type</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Selectionner une type</mat-label>
+      <mat-select #typeValue (selectionChange)="selectType($event.value)">
+        <mat-option value="Air">Air</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-drawer>
+</mat-drawer-container>
