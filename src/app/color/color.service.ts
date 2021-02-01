@@ -103,9 +103,9 @@ export class ColorsService {
   }
 
   //Récupération des couleurs via le nom
-  getColorsName(name: string) {
+  getColorsName(name: string, gamme: string, type: string) {
     //Construction query
-    const queryParams = `nom?nom=${name}`;
+    const queryParams = `nom?nom=${name}&gamme=${gamme}&type=${type}`;
 
     //Récupération des couleurs
     this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)

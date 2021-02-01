@@ -57,7 +57,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
     //Gestion de la récupération des couleurs
     this.colorsSub = this.colorService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[] }) => {
-        //Récupération des posts
+        //Récupération des couleurs
         this.colors = colorData.color;
       })
 
@@ -88,7 +88,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
   //Selection d'une gamme
   selectGamme(gamme: string){
     //MAJ gamme
-    this.l_gamme = gamme;
+    this.l_gamme = (gamme == "tout" ? "" : gamme);
     //Demande récupération des couleurs via les filtres
     this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
   }
@@ -96,7 +96,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
   //Selection d'un type
   selectType(type: string){
     //MAJ type
-    this.l_type = type;
+    this.l_type = (type == "tout" ? "" : type);
    //Demande récupération des couleurs via les filtres
    this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
   }
@@ -104,6 +104,6 @@ export class ColorListComponent implements OnInit, OnDestroy {
   //Recherche
   search(event){
     //Appel service
-    this.colorService.getColorsName(event.target.value);
+    this.colorService.getColorsName(event.target.value, this.l_gamme, this.l_type);
   }
 }
