@@ -39,3 +39,13 @@ ng add @angular/material
     sudo docker run --name myangular -d -p 4200:80 angular_decouverte
 
     docker run --name angular_painting -p 8082:80 robotix703/angular_painting:latest &
+
+## Déploiement du docker
+
+  ssh robotix703@62.210.144.226
+
+  Stopper et supprimer les dockers et les images des conteneurs précédents
+
+  docker pull robotix703/api_rest_painting:latest
+
+  docker pull robotix703/angular_painting:latest

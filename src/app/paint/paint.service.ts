@@ -71,7 +71,7 @@ export class PaintsService {
     this.http.post<Instruction>(URL_BACKEND, instructionData)
       .subscribe((responseData: Instruction) => {
         //Redirection de l'utilisateur
-        this.router.navigate(["/"]);
+        this.router.navigate(["/paint/" + figurineID]);
       });
   }
 

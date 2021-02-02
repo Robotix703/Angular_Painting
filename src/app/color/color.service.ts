@@ -37,7 +37,7 @@ export class ColorsService {
     this.http.post<Color>(URL_BACKEND, colorData)
       .subscribe((responseData: Color) => {
         //Redirection de l'utilisateur
-        this.router.navigate(["/"]);
+        this.router.navigate(["/color/list"]);
       });
   }
 

@@ -38,7 +38,7 @@ export class ColorCreateComponent implements OnInit {
   gammes: string[] = ['Citadel', 'Army Painter'];
   filteredGamme: Observable<string[]>;
 
-  types: string[] = ['Air', 'Dry', 'Base', 'Layer', 'Contrast'];
+  types: string[] = ['Air', 'Dry', 'Base', 'Layer', 'Contrast', 'Shader'];
   filteredTypes: Observable<string[]>;
 
   private _filterGammes(value: string): string[] {
