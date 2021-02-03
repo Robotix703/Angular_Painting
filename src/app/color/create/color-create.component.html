@@ -19,24 +19,26 @@
     </mat-form-field>
 
     <!--Gamme-->
-    <input type="text" style="margin-bottom: 10px;" placeholder="Gamme" aria-label="Number" matInput
-      formControlName="gamme" [matAutocomplete]="autoGamme">
-    <mat-autocomplete autoActiveFirstOption #autoGamme="matAutocomplete">
-      <mat-option *ngFor="let gamme of filteredGamme | async" [value]="gamme">
-        {{gamme}}
-      </mat-option>
-    </mat-autocomplete>
+    <mat-form-field>
+      <input type="text" placeholder="Gamme" matInput
+        formControlName="gamme" [matAutocomplete]="autoGamme">
+      <mat-autocomplete autoActiveFirstOption #autoGamme="matAutocomplete">
+        <mat-option *ngFor="let gamme of filteredGamme | async" [value]="gamme">
+          {{gamme}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
     <!--Type-->
-    <input type="text" style="margin-bottom: 10px;" placeholder="Type" aria-label="Number" matInput
-      formControlName="type" [matAutocomplete]="autoType">
-    <mat-autocomplete autoActiveFirstOption #autoType="matAutocomplete">
-      <mat-option *ngFor="let type of filteredTypes | async" [value]="type">
-        {{type}}
-      </mat-option>
-    </mat-autocomplete>
-
-    <hr>
+    <mat-form-field>
+      <input type="text" placeholder="Type" aria-label="Number" matInput
+        formControlName="type" [matAutocomplete]="autoType">
+      <mat-autocomplete autoActiveFirstOption #autoType="matAutocomplete">
+        <mat-option *ngFor="let type of filteredTypes | async" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
     <!--Imput-->
     <button mat-raised-button color="primary" type="submit">Sauvegarder Couleur

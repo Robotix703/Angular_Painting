@@ -35,10 +35,10 @@ export class ColorCreateComponent implements OnInit {
   constructor(public ColorsService: ColorsService, public route: ActivatedRoute) { }
 
   //Gestion des options
-  gammes: string[] = ['Citadel', 'Army Painter'];
+  gammes: string[] = ['Citadel', 'Army Painter', 'Air Printer'];
   filteredGamme: Observable<string[]>;
 
-  types: string[] = ['Air', 'Dry', 'Base', 'Layer', 'Contrast', 'Shader'];
+  types: string[] = ['Air', 'Dry', 'Base', 'Layer', 'Contrast', 'Shader', 'Texture', 'Dry', 'Technical', 'Glaze'];
   filteredTypes: Observable<string[]>;
 
   private _filterGammes(value: string): string[] {

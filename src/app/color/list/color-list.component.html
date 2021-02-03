@@ -11,9 +11,15 @@
   </mat-form-field>
 
   <!--Filtre-->
-  <button type="button" mat-button (click)="drawer.toggle()">
+  <button type="button" mat-raised-button color="accent" style="margin: 1rem;" (click)="drawer.toggle()">
     Filtres
   </button>
+
+  <!--Création couleur-->
+  <a mat-raised-button color="primary" [routerLink]="['/color/create']">Ajouter Couleur</a>
+
+  <!--Indication du nombre de peintures-->
+  <h1 style="margin: 1rem;">Nombre de Peintures : {{totalColors}}</h1>
 </div>
 
 <mat-drawer-container class="container" autosize>
@@ -37,8 +43,6 @@
 
   <p class="info-text mat-body-1" *ngIf="colors.length == 0">Aucune Couleurs</p>
 
-  <a mat-button color="secondary" [routerLink]="['/color/create']">Ajouter Couleur</a>
-
   <!--Remplissage-->
   <mat-accordion *ngIf="colors.length <= 1">
     <div style="visibility: hidden;">
@@ -56,6 +60,7 @@
         <mat-option value="tout">Tout</mat-option>
         <mat-option value="Citadel">Citadel</mat-option>
         <mat-option value="Army Painter">Army Painter</mat-option>
+        <mat-option value="Air Printer">Air Printer</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -71,6 +76,10 @@
         <mat-option value="Layer">Layer</mat-option>
         <mat-option value="Contrast">Contrast</mat-option>
         <mat-option value="Shader">Shader</mat-option>
+        <mat-option value="Texture">Texture</mat-option>
+        <mat-option value="Dry">Dry</mat-option>
+        <mat-option value="Technical">Technical</mat-option>
+        <mat-option value="Glaze">Glaze</mat-option>
       </mat-select>
     </mat-form-field>
   </mat-drawer>

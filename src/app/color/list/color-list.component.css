@@ -38,6 +38,7 @@ mat-card {
   height: 100%;
   align-items: center;
   justify-content: center;
+  margin-right: 1rem;
 }
 
 .sidenav {

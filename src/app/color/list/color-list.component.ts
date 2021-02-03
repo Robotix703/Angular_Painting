@@ -59,6 +59,9 @@ export class ColorListComponent implements OnInit, OnDestroy {
       .subscribe((colorData: { color: Color[] }) => {
         //Récupération des couleurs
         this.colors = colorData.color;
+
+        //Récupération du nombre de couleurs
+        this.totalColors = this.colors.length;
       })
 
     //Première mise à jour de l'état de connexion
