@@ -2,41 +2,36 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { Color } from '../color.model';
-import { ColorsService } from '../color.service';
-import { consts } from '../../consts'
+import { Drawer } from '../drawer.model';
+import { DrawerService } from '../drawer.service';
+import { consts } from '../../consts';
 
 // Définition du composant
 @Component({
   //Nom
   selector: 'app-color-create',
   //Chemin vers le fichier HTML
-  templateUrl: './color-create.component.html',
+  templateUrl: './drawer-create.component.html',
   //Lien vers la fichier CSS
-  styleUrls: ['./color-create.component.css']
+  styleUrls: ['./drawer-create.component.css']
 })
 
 // Composant
-export class ColorCreateComponent implements OnInit {
+export class DrawerCreateComponent implements OnInit {
 
   //ID
-  private ColorID: string;
-
-  //Couleur à modifier
-  color: Color;
+  private DrawerID: string;
 
   //Formulaire
   formulaire: FormGroup;
   myControl = new FormControl();
 
-  constructor(public ColorsService: ColorsService, public route: ActivatedRoute) { }
+  constructor(public DrawerService: DrawerService, public route: ActivatedRoute) { }
 
   //Gestion des options
   filteredGamme: Observable<string[]>;
-
   filteredTypes: Observable<string[]>;
 
   private _filterGammes(value: string): string[] {
@@ -75,9 +70,6 @@ export class ColorCreateComponent implements OnInit {
       }),
       type: new FormControl(null, {
         validators: [Validators.required]
-      }),
-      colorCode: new FormControl(null, {
-        validators: [Validators.required]
       })
     });
   }
@@ -90,6 +82,6 @@ export class ColorCreateComponent implements OnInit {
     }
 
     //Publication de la couleur
-    this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode);
+    //this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode);
   }
 }

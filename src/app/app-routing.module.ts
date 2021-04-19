@@ -9,6 +9,7 @@ import { FigurineListComponent } from './figurine/list/figurine-list.component';
 import { PaintCreateComponent } from './paint/create/paint-create.component';
 import { PaintEditComponent } from './paint/edit/paint-edit.component';
 import { PaintListComponent } from './paint/list/paint-list.component';
+import { DrawerCreateComponent } from './drawer/create/drawer-create.component';
 
 const routes: Routes = [
     //Main page
@@ -30,6 +31,9 @@ const routes: Routes = [
     { path: 'color/create', component: ColorCreateComponent, canActivate: [AuthGuard] },
     //Lecture des couleurs
     { path: 'color/list', component: ColorListComponent, canActivate: [AuthGuard] },
+
+    //Création de Tiroird
+    { path: 'drawer/create', component: DrawerCreateComponent, canActivate: [AuthGuard] },
 
     //Routes filles
     { path: "auth", loadChildren: () => import("./auth/auth.module").then(module => module.AuthModule) }
