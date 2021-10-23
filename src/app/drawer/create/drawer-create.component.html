@@ -1,0 +1,30 @@
+<h2>Création Tiroir</h2>
+
+<!--Balise permettant l'utilisation du module card-->
+<mat-card>
+  <!--Utilisation de la balise Form pour simplifier la récupération d'informations par Angular-->
+  <!--On indique l'opération à faire lors de l'événement submit-->
+  <!--On passe en paramètre les données du formulaire géré par angular via ngForm-->
+  <form [formGroup]="formulaire" (submit)="onSaveInstruction()">
+    <!--Nom-->
+    <mat-form-field>
+      <input matInput formControlName="name" type="text" placeholder="Nom">
+      <mat-error *ngIf="formulaire.get('name').invalid">Entrez un nom</mat-error>
+    </mat-form-field>
+
+    <!--Type-->
+    <mat-form-field>
+      <input type="text" placeholder="Type" aria-label="Number" matInput
+        formControlName="type" [matAutocomplete]="autoType">
+      <mat-autocomplete autoActiveFirstOption #autoType="matAutocomplete">
+        <mat-option *ngFor="let type of filteredTypes | async" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <!--Imput-->
+    <button mat-raised-button color="primary" type="submit">Sauvegarder Tiroir
+    </button>
+  </form>
+</mat-card>
