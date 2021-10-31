@@ -30,13 +30,18 @@
         <mat-card-title>
           {{ drawer.name }}
         </mat-card-title>
+
         <!--Type-->
         <mat-dialog-content>
           {{ drawer.type }}
-  
-          <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/drawer/edit', drawer.id]">Edit</a>
+
+          <!--View-->
+          <a mat-button color="secondary" [routerLink]="['/drawer/view', drawer.name]">View</a>
+
+          <!--Delete-->
           <button mat-button color="warn" (click)="onDelete(drawer.id)">Delete</button>
         </mat-dialog-content>
+
       </mat-card>
     </mat-accordion>
   

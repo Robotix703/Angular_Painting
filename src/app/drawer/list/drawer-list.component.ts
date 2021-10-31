@@ -86,6 +86,6 @@ export class DrawerListComponent implements OnInit, OnDestroy {
   //Recherche
   search(event){
     //Appel service
-    this.drawerService.getDrawersName(event.target.value);
+    this.drawerService.getDrawerByName(event.target.value);
   }
 }
