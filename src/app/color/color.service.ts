@@ -24,13 +24,16 @@ export class ColorsService {
   constructor(private http: HttpClient, private router: Router) { }
 
   //Ecriture d'une couleur
-  writeColor(name: string, gamme: string, type: string, colorCode: string) {
+  writeColor(name: string, gamme: string, type: string, colorCode: string, drawerName: string, positionX: Number, positionY: Number) {
     //Stockage image et données
     const colorData = {
       name: name,
       gamme: gamme,
       type: type,
-      colorCode: colorCode
+      colorCode: colorCode,
+      drawerName: drawerName,
+      positionX: positionX,
+      positionY: positionY
     }
 
     //Requête POST
@@ -64,7 +67,10 @@ export class ColorsService {
               name: color.name,
               gamme: color.gamme,
               type: color.type,
-              colorCode: color.colorCode
+              colorCode: color.colorCode,
+              drawerName: color.drawerName,
+              positionX: color.positionX,
+              positionY: color.positionY
             }
           })
         }
@@ -91,7 +97,10 @@ export class ColorsService {
               name: color.name,
               gamme: color.gamme,
               type: color.type,
-              colorCode: color.colorCode
+              colorCode: color.colorCode,
+              drawerName: color.drawerName,
+              positionX: color.positionX,
+              positionY: color.positionY
             }
           })
         }
@@ -118,7 +127,10 @@ export class ColorsService {
               name: color.name,
               gamme: color.gamme,
               type: color.type,
-              colorCode: color.colorCode
+              colorCode: color.colorCode,
+              drawerName: color.drawerName,
+              positionX: color.positionX,
+              positionY: color.positionY
             }
           })
         }
