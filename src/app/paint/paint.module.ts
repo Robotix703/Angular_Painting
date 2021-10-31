@@ -4,9 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; //Gestion des
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '../angular-material.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 import { PaintCreateComponent } from './create/paint-create.component';
 import { PaintListComponent } from './list/paint-list.component';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { PaintEditComponent } from './edit/paint-edit.component';
 
 @NgModule({

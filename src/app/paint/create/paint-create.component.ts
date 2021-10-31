@@ -10,6 +10,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
 import { ColorsService } from 'src/app/color/color.service';
 import { Color } from 'src/app/color/color.model';
 
