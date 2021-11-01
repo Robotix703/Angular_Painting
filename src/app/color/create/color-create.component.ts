@@ -68,9 +68,8 @@ export class ColorCreateComponent implements OnInit {
 
   ngOnInit() {
 
-    this.DrawersService.getDrawersNames();
-
     //Gestion de la récupération des tiroirs
+    this.DrawersService.getDrawersNames();
     this.drawerSub = this.DrawersService.getDrawerUpdateListener()
       .subscribe((drawersData: { drawer: Drawer[] }) => {
         this.drawersName = drawersData.drawer.map(a => a.name);

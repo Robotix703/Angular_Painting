@@ -104,6 +104,6 @@ export class ColorListComponent implements OnInit, OnDestroy {
   //Recherche
   search(event){
     //Appel service
-    this.colorService.getColorsName(event.target.value, this.l_gamme, this.l_type);
+    this.colorService.getColorsName(event.target.value);
   }
 }

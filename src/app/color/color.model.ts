@@ -25,7 +25,6 @@ export class colorHTMLDisplay {
   }
 
   getHTML() {
-    console.log(this.html)
     return this.html;
   }
 }
