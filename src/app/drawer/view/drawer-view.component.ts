@@ -43,7 +43,8 @@ export class DrawerViewComponent implements OnInit {
         ["", "", ""],
         ["", "", ""],
         ["", "", ""]
-    ]
+    ];
+    public drawerCount;
 
     DisplayColors(drawerColors: Color[]){
         let drawerSize = (this.DrawerType == DrawerTypes[0]) ? sizeDrawerCitadel : sizeDrawerArmy;
@@ -82,6 +83,7 @@ export class DrawerViewComponent implements OnInit {
                     this.colorsSub = this.ColorService.getColorUpdateListener()
                     .subscribe((colorData: { color: Color[] }) => {
                         this.DisplayColors(colorData.color);
+                        this.drawerCount = colorData.color.length;
                     })
                 });
             }

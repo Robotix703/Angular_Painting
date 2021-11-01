@@ -20,4 +20,4 @@ export const sizeDrawerArmy = {
     totalSize: 24
 }
 
-export const DrawerTypes = ["Citadel", "Army"];
+export const DrawerTypes = ["Citadel", "Army Painter"];

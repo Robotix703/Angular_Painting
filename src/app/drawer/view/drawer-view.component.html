@@ -1,33 +1,37 @@
 <h1 class="main_title">Tiroir - {{DrawerName}}</h1>
 
 <!--Peinture-->
-<mat-grid-list *ngIf="DrawerType == 'peinture'" cols="3" rowHeight="3:1">
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[0][0]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[0][1]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[0][2]"></div></mat-grid-tile>
+<mat-accordion *ngIf="drawerCount > 0">
+    <mat-grid-list *ngIf="DrawerType == 'peinture'" cols="3" rowHeight="3:1">
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[0][0]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[0][1]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[0][2]"></div></mat-grid-tile>
 
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[1][0]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[1][1]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[1][2]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[1][0]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[1][1]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[1][2]"></div></mat-grid-tile>
 
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[2][0]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[2][1]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[2][2]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[2][0]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[2][1]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[2][2]"></div></mat-grid-tile>
 
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[3][0]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[3][1]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[3][2]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[3][0]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[3][1]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[3][2]"></div></mat-grid-tile>
 
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[4][0]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[4][1]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[4][2]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[4][0]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[4][1]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[4][2]"></div></mat-grid-tile>
 
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[5][0]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[5][1]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[5][2]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[5][0]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[5][1]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[5][2]"></div></mat-grid-tile>
 
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[6][0]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[6][1]"></div></mat-grid-tile>
-    <mat-grid-tile><div [innerHTML]="drawerColorsMapping[6][2]"></div></mat-grid-tile>
-</mat-grid-list>
-  
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[6][0]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[6][1]"></div></mat-grid-tile>
+        <mat-grid-tile><div [innerHTML]="drawerColorsMapping[6][2]"></div></mat-grid-tile>
+    </mat-grid-list>
+</mat-accordion>
+<div>
+    <h1>Pas de couleur dans ce tiroir</h1>
+</div>
