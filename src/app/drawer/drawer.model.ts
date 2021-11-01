@@ -7,3 +7,17 @@ export interface Drawer {
     //Type de peinture
     type: string;
 }
+
+export const sizeDrawerCitadel = {
+    X: 3,
+    Y: 5,
+    totalSize: 15
+}
+
+export const sizeDrawerArmy = {
+    X: 4,
+    Y: 6,
+    totalSize: 24
+}
+
+export const DrawerTypes = ["Citadel", "Army"];

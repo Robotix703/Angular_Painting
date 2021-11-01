@@ -5,7 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { Drawer } from '../drawer.model';
+
+import { Drawer, DrawerTypes } from '../drawer.model';
 import { DrawersService } from '../drawer.service';
 
 
@@ -34,7 +35,7 @@ export class DrawerCreateComponent implements OnInit {
 
   constructor(public DrawersService: DrawersService, public route: ActivatedRoute) { }
 
-  types: string[] = ['Air', 'Dry', 'Base', 'Layer', 'Contrast', 'Shader', 'Texture', 'Dry', 'Technical', 'Glaze'];
+  types: string[] = DrawerTypes;
   filteredTypes: Observable<string[]>;
 
   private _filterTypes(value: string): string[] {

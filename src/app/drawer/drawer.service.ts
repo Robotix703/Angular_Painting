@@ -62,6 +62,24 @@ export class DrawersService {
       });
   }
 
+  getDrawersNames() {
+    this.http.get<{ Drawers: any }>(URL_BACKEND)
+      //Ajout d'une opération sur les données
+      .pipe(map((data) => {
+        return {
+          drawers: data.Drawers.map(drawer => {
+            return {
+              name: drawer.name
+            }
+          })
+        }
+      }))
+      .subscribe((transformedDrawer) => {
+        this.drawer = transformedDrawer.drawers;
+        this.drawerUpdated.next({ drawer: [...this.drawer] });
+      });
+  }
+
   getDrawersFiltre(type: string) {
     //Construction query
     const queryParams = `filtre?type=${type}`;
@@ -85,27 +103,16 @@ export class DrawersService {
       });
   }
 
-  getDrawersName(name: string) {
+  getDrawerByName(name: string) {
     //Construction query
     const queryParams = `nom?nom=${name}`;
 
-    this.http.get<{ Drawers: any }>(URL_BACKEND + queryParams)
-      //Ajout d'une opération sur les données
-      .pipe(map((data) => {
-        return {
-          drawers: data.Drawers.map(drawer => {
-            return {
-              id: drawer._id,
-              name: drawer.name,
-              type: drawer.type
-            }
-          })
-        }
-      }))
-      .subscribe((transformedDrawer) => {
-        this.drawer = transformedDrawer.drawers;
-        this.drawerUpdated.next({ drawer: [...this.drawer] });
-      });
+    return this.http.get<{ Drawers: any }>(URL_BACKEND + queryParams);
+  }
+
+  //Récupération d'une instruction
+  getInstruction(id: string) {
+    return this.http.get<{ _id: string, name: string, content: string, figurineID: string, paintID: [string], step: number }>(URL_BACKEND + id);
   }
 
   //Demande de destruction des données au niveau de la BDD

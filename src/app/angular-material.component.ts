@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list'; 
 
 @NgModule({
     exports: [
@@ -32,7 +33,8 @@ import { MatSelectModule } from '@angular/material/select';
         MatIconModule,
         MatTableModule,
         MatSidenavModule,
-        MatSelectModule
+        MatSelectModule,
+        MatGridListModule
     ]
 })
 
