@@ -27,16 +27,25 @@
     <!--Conteneur des tuiles par figurines-->
     <mat-card *ngFor="let color of colors">
       <!--Header-->
-      <mat-card-title>
+      <mat-card-title style="margin-bottom: 1rem;">
         {{ color.name }}
         <span class="dot" [ngStyle]="{'background-color': color.colorCode}"></span>
       </mat-card-title>
       <!--Gamme et type-->
       <mat-dialog-content>
-        {{ color.gamme }} - {{ color.type }}
-
-        <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/color/edit', color.id]">Edit</a>
-        <button mat-button color="warn" (click)="onDelete(color.id)">Delete</button>
+        <div class="row">
+          <div>
+            {{ color.gamme }} - {{ color.type }}
+          </div>
+          <div>
+            {{ color.drawerName }} - ({{ color.positionX }} : {{ color.positionY }})
+          </div>
+          <div>
+            <hr>
+            <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/color/edit', color.id]">Edit</a>
+            <button mat-button color="warn" (click)="onDelete(color.id)">Delete</button>
+          </div>
+        </div>
       </mat-dialog-content>
     </mat-card>
   </mat-accordion>

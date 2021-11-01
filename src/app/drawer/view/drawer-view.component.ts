@@ -52,7 +52,11 @@ export class DrawerViewComponent implements OnInit {
         let columns = [];
         for(let i = 0 ; i <= drawerSize.X ; i++){
             columns[i] = drawerColors.filter(e => e.positionX == i);
-            columns[i].sort(e => e.positionY);
+            columns[i].sort(function(a, b){
+                if(a.positionY > b.positionY) return 1;
+                if(a.positionY < b.positionY) return -1;
+                return 0;
+            });
 
             for(let j = 0 ; j <= drawerSize.Y ; j++){
                 if(columns[i][j]){

@@ -28,6 +28,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
 
   //Nombre de couleurs
   totalColors;
+  colorGreen = "green"
 
   //Système de connexion
   userIsAuthenticated = false;
