@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ParamMap } from '@angular/router';
+
 import { Figurine } from '../figurine.model';
 import { FigurinesService } from '../figurine.service';
 

@@ -18,6 +18,7 @@ import { AuthRoutingModule } from './auth/auth-routing.module';
 import { FigurineModule } from './figurine/figurine.module';
 import { PaintModule } from './paint/paint.module';
 import { ColorModule } from './color/color.module';
+import { DrawerModule } from './drawer/drawer.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ColorModule } from './color/color.module';
     FigurineModule,
     PaintModule,
     ColorModule,
+    DrawerModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
     HttpClientModule,

@@ -10,10 +10,6 @@ import { Instruction } from '../paint.model';
 import { PaintsService } from '../paint.service';
 import { ColorsService } from 'src/app/color/color.service';
 
-const ELEMENT_DATA: Color[] = [
-  { id: "etete", name: 'Hydrogen', gamme: "Citadel", type: "", colorCode: "" }
-];
-
 // Définition du composant
 @Component({
   //Nom

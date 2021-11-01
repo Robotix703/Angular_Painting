@@ -1,4 +1,4 @@
-<div class="sidenav-content">
+<div style="text-align: center;">
   <!--Recherche figurine-->
   <mat-form-field appearance="fill">
     <mat-label>Nom Couleur</mat-label>
@@ -18,8 +18,8 @@
   <!--Création couleur-->
   <a mat-raised-button color="primary" [routerLink]="['/color/create']">Ajouter Couleur</a>
 
-  <!--Indication du nombre de peintures-->
-  <h1 style="margin: 1rem;">Nombre de Peintures : {{totalColors}}</h1>
+  <!--Indication du nombre de couleurs-->
+  <h1 style="margin: 1rem;">Nombre de couleurs : {{totalColors}}</h1>
 </div>
 
 <mat-drawer-container class="container" autosize>
@@ -27,16 +27,25 @@
     <!--Conteneur des tuiles par figurines-->
     <mat-card *ngFor="let color of colors">
       <!--Header-->
-      <mat-card-title>
+      <mat-card-title style="margin-bottom: 1rem;">
         {{ color.name }}
         <span class="dot" [ngStyle]="{'background-color': color.colorCode}"></span>
       </mat-card-title>
       <!--Gamme et type-->
       <mat-dialog-content>
-        {{ color.gamme }} - {{ color.type }}
-
-        <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/color/edit', color.id]">Edit</a>
-        <button mat-button color="warn" (click)="onDelete(color.id)">Delete</button>
+        <div class="row">
+          <div>
+            {{ color.gamme }} - {{ color.type }}
+          </div>
+          <div>
+            {{ color.drawerName }} - ({{ color.positionX }} : {{ color.positionY }})
+          </div>
+          <div>
+            <hr>
+            <a mat-button color="secondary" style="visibility: hidden;" [routerLink]="['/color/edit', color.id]">Edit</a>
+            <button mat-button color="warn" (click)="onDelete(color.id)">Delete</button>
+          </div>
+        </div>
       </mat-dialog-content>
     </mat-card>
   </mat-accordion>
@@ -46,12 +55,12 @@
   <!--Remplissage-->
   <mat-accordion *ngIf="colors.length <= 1">
     <div style="visibility: hidden;">
-      <p style="height: 200px;">REMPLISSAGE</p>
+      <p style="height: 300px;">REMPLISSAGE</p>
     </div>
   </mat-accordion>
 
   <!--Sidebare-->
-  <mat-drawer #drawer class="sidenav" mode="side">
+  <mat-drawer #drawer class="sidenav-content" mode="side">
     <!--Gamme-->
     <h4>Gamme</h4>
     <mat-form-field appearance="fill">

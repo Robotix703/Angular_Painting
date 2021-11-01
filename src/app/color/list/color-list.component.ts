@@ -27,7 +27,8 @@ export class ColorListComponent implements OnInit, OnDestroy {
   colors = [];
 
   //Nombre de couleurs
-  totalColors = 0;
+  totalColors;
+  colorGreen = "green"
 
   //Système de connexion
   userIsAuthenticated = false;
@@ -59,9 +60,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
       .subscribe((colorData: { color: Color[] }) => {
         //Récupération des couleurs
         this.colors = colorData.color;
-
-        //Récupération du nombre de couleurs
-        this.totalColors = this.colors.length;
+        this.totalColors = colorData.color.length;
       })
 
     //Première mise à jour de l'état de connexion
@@ -107,6 +106,6 @@ export class ColorListComponent implements OnInit, OnDestroy {
   //Recherche
   search(event){
     //Appel service
-    this.colorService.getColorsName(event.target.value, this.l_gamme, this.l_type);
+    this.colorService.getColorsName(event.target.value);
   }
 }

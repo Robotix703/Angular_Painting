@@ -10,4 +10,21 @@ export interface Color {
   type: string;
   //Code couleur
   colorCode: string;
+  //Nom du tiroir
+  drawerName: string;
+  //Position X dans le tiroir
+  positionX: Number;
+  //Position Y dans le tiroir
+  positionY: Number;
+}
+
+export class colorHTMLDisplay {
+  private html;
+  constructor(colorName: string, colorCode: string) {
+      this.html = `<h1>` + colorName + `</h1>`;
+  }
+
+  getHTML() {
+    return this.html;
+  }
 }

@@ -5,16 +5,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '../angular-material.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
 
-import { PaintCreateComponent } from './create/paint-create.component';
-import { PaintListComponent } from './list/paint-list.component';
-import { PaintEditComponent } from './edit/paint-edit.component';
+import { DrawerCreateComponent } from './create/drawer-create.component';
+import { DrawerListComponent } from './list/drawer-list.component';
+import { DrawerViewComponent } from './view/drawer-view.component';
 
 @NgModule({
   declarations: [
-    PaintCreateComponent,
-    PaintListComponent,
-    PaintEditComponent
+    DrawerCreateComponent,
+    DrawerListComponent,
+    DrawerViewComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +24,8 @@ import { PaintEditComponent } from './edit/paint-edit.component';
     AngularMaterialModule,
     MatFormFieldModule,
     RouterModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule
   ]
 })
-export class PaintModule { }
+export class DrawerModule { }

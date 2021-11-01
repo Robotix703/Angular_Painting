@@ -3,10 +3,13 @@ import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
 import { Color } from '../color.model';
 import { ColorsService } from '../color.service';
+import { DrawersService } from 'src/app/drawer/drawer.service';
+import { Drawer } from 'src/app/drawer/drawer.model';
 
 
 // Définition du composant
@@ -22,17 +25,21 @@ import { ColorsService } from '../color.service';
 // Composant
 export class ColorCreateComponent implements OnInit {
 
-  //ID
   private ColorID: string;
-
-  //Couleur à modifier
   color: Color;
 
   //Formulaire
   formulaire: FormGroup;
   myControl = new FormControl();
 
-  constructor(public ColorsService: ColorsService, public route: ActivatedRoute) { }
+  //Abonnement
+  private drawerSub: Subscription;
+  
+  drawer: Drawer;
+  drawersName = [];
+  filteredDrawers: Observable<string[]>;
+
+  constructor(public ColorsService: ColorsService, public route: ActivatedRoute, public DrawersService: DrawersService) { }
 
   //Gestion des options
   gammes: string[] = ['Citadel', 'Army Painter', 'Air Printer'];
@@ -53,19 +60,36 @@ export class ColorCreateComponent implements OnInit {
     return this.types.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  private _filterDrawers(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.drawersName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
   ngOnInit() {
 
-    //Chargement des gammes
+    //Gestion de la récupération des tiroirs
+    this.DrawersService.getDrawersNames();
+    this.drawerSub = this.DrawersService.getDrawerUpdateListener()
+      .subscribe((drawersData: { drawer: Drawer[] }) => {
+        this.drawersName = drawersData.drawer.map(a => a.name);
+        this.filteredDrawers = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterDrawers(value))
+        );
+      })
+
+
+    //Filtre
     this.filteredGamme = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterGammes(value))
     );
-
-    //Chargement des types
     this.filteredTypes = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterTypes(value))
     );
+    
 
     //Initialisation du formulaire
     this.formulaire = new FormGroup({
@@ -80,6 +104,15 @@ export class ColorCreateComponent implements OnInit {
       }),
       colorCode: new FormControl(null, {
         validators: [Validators.required]
+      }),
+      drawerName: new FormControl(null, {
+        validators: [Validators.minLength(1)]
+      }),
+      positionX: new FormControl(null, {
+        validators: [Validators.min(0), Validators.max(4)]
+      }),
+      positionY: new FormControl(null, {
+        validators: [Validators.min(0), Validators.max(6)]
       })
     });
   }
@@ -92,6 +125,6 @@ export class ColorCreateComponent implements OnInit {
     }
 
     //Publication de la couleur
-    this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode);
+    this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode, this.formulaire.value.drawerName, this.formulaire.value.positionX, this.formulaire.value.positionY);
   }
 }

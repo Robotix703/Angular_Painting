@@ -1,0 +1,66 @@
+<div style="text-align: center;">
+  <!--Recherche-->
+  <mat-form-field appearance="fill">
+    <mat-label>Nom Tiroir</mat-label>
+    <input matInput placeholder="Recherche" id="search" (keyup)="search($event)">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <!--Filtre-->
+  <button type="button" mat-raised-button color="accent" style="margin: 1rem;" (click)="drawer.toggle()">
+    Filtres
+  </button>
+
+  <!--Création tiroir-->
+  <a mat-raised-button color="primary" [routerLink]="['/drawer/create']">Ajouter Tiroir</a>
+
+  <!--Indication du nombre de tiroirs-->
+  <h1 style="margin: 1rem;">Nombre de Tiroirs : {{totalDrawers}}</h1>
+</div>
+
+<mat-drawer-container class="container" autosize>
+  <mat-accordion *ngIf="drawers.length > 0">
+    <!--Conteneur des tuiles par tiroir-->
+    <mat-card *ngFor="let drawer of drawers">
+      <!--Header-->
+      <mat-card-title>
+        {{ drawer.name }}
+      </mat-card-title>
+
+      <!--Type-->
+      <mat-dialog-content>
+        {{ drawer.type }}
+
+        <!--View-->
+        <a mat-button color="secondary" [routerLink]="['/drawer/view', drawer.name]">View</a>
+
+        <!--Delete-->
+        <button mat-button color="warn" (click)="onDelete(drawer.id)">Delete</button>
+      </mat-dialog-content>
+
+    </mat-card>
+  </mat-accordion>
+
+  <p class="info-text mat-body-1" *ngIf="drawers.length == 0">Aucun Tiroir</p>
+
+  <!--Remplissage-->
+  <mat-accordion *ngIf="drawers.length <= 1">
+    <div style="visibility: hidden;">
+      <p style="height: 300px;">REMPLISSAGE</p>
+    </div>
+  </mat-accordion>
+
+  <!--Sidebare-->
+  <mat-drawer #drawer class="sidenav-content" mode="side">
+    <!--Type-->
+    <h4>Type</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Selectionner une type</mat-label>
+      <mat-select #typeValue (selectionChange)="selectType($event.value)">
+        <mat-option value="tout">Tout</mat-option>
+        <mat-option value="Citadel">Citadel</mat-option>
+        <mat-option value="Army Painter">Army Painter</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-drawer>
+</mat-drawer-container>

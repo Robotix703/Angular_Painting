@@ -18,6 +18,8 @@
       <mat-error *ngIf="formulaire.get('colorCode').invalid">Entrez un code couleur</mat-error>
     </mat-form-field>
 
+    <hr>
+
     <!--Gamme-->
     <mat-form-field>
       <input type="text" placeholder="Gamme" matInput
@@ -39,6 +41,29 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
+
+    <!--Drawer name-->
+    <input type="text" style="margin-bottom: 10px;" placeholder="Nom Tiroir" aria-label="Number" matInput
+      formControlName="drawerName" [matAutocomplete]="autoDrawer">
+    <mat-autocomplete autoActiveFirstOption #autoDrawer="matAutocomplete">
+      <mat-option *ngFor="let name of filteredDrawers | async" [value]="name">
+        {{name}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <!--Position X-->
+    <mat-form-field>
+      <input matInput formControlName="positionX" type="number" placeholder="Position X">
+      <mat-error *ngIf="formulaire.get('name').invalid">Position X</mat-error>
+    </mat-form-field>
+
+    <!--Position Y-->
+    <mat-form-field>
+      <input matInput formControlName="positionY" type="number" placeholder="Position Y">
+      <mat-error *ngIf="formulaire.get('colorCode').invalid">Position Y</mat-error>
+    </mat-form-field>
+
+    <hr>
 
     <!--Imput-->
     <button mat-raised-button color="primary" type="submit">Sauvegarder Couleur
