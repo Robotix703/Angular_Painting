@@ -80,9 +80,9 @@ export class DrawersService {
       });
   }
 
-  getDrawersFiltre(type: string) {
+  getDrawersByType(type: string) {
     //Construction query
-    const queryParams = `filtre?type=${type}`;
+    const queryParams = `type?type=${type}`;
 
     this.http.get<{ Drawers: any }>(URL_BACKEND + queryParams)
       //Ajout d'une opération sur les données
