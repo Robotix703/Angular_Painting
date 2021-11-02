@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -55,7 +54,7 @@ export class DrawerCreateComponent implements OnInit {
     //Initialisation du formulaire
     this.formulaire = new FormGroup({
       name: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
+        validators: [Validators.required, Validators.minLength(3), Validators.pattern(/^\S*$/)]
       }),
       type: new FormControl(null, {
         validators: [Validators.required]

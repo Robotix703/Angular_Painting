@@ -13,23 +13,19 @@ const URL_BACKEND = environment.apiURL + "user";
 
 export class AuthService {
 
-  //Sauvegarde du token
   private token: string;
-  //Etat de connexion
+
   private authStatus = new Subject<boolean>();
   private isAuthenticated = false;
   private tokenTimer;
   private userId: string;
 
-  //Gestion connexion à NodeJs
   constructor(private http: HttpClient, private router: Router) { }
 
-  //Récupération du token
   getToken() {
     return this.token;
   }
 
-  //Récupération de l'état de connexion
   getAuthStatusListener() {
     return this.authStatus.asObservable();
   }
@@ -37,12 +33,9 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
-  //Création d'utilisateur
-  createUser(email: string, password: string) {
-    //Gestion des identifiants
-    const authData: AuthData = { email: email, password: password };
+  createUser(email: string, password: string, inviteCode: string) {
+    const authData = { email: email, password: password, invitationCode: inviteCode };
 
-    //Requête
     this.http.post(URL_BACKEND + "/signup", authData)
       .subscribe(reponse => {
         this.router.navigate(['/']);
@@ -51,7 +44,6 @@ export class AuthService {
       });
   }
 
-  //Récupération user ID
   getUserId() {
     return this.userId;
   }
