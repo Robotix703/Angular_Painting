@@ -1,12 +1,7 @@
-<!--Balise permettant l'utilisation du module card-->
 <mat-card>
-    <!--Spinner de chargement-->
     <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <!--Utilisation de la balise Form pour simplifier la récupération d'informations par Angular-->
-    <!--On indique l'opération à faire lors de l'événement submit-->
-    <!--On passe en paramètre les données du formulaire géré par angular via ngForm-->
+
     <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
-        <!--Titre-->
         <mat-form-field>
             <input matInput 
             name="email"
@@ -19,10 +14,7 @@
             <mat-error *ngIf="emailInput.invalid">Entrez un email valide</mat-error>
         </mat-form-field>
 
-        <!--Balise permettant l'utilisation du module material (Voir site officiel)-->
         <mat-form-field>
-            <!--Lien vers une propriété-->
-            <!--ngModel : Propriété bidirectionnelle liée à enteredContent-->
             <input matInput 
             name="password"
             type="password" 
@@ -31,6 +23,17 @@
             placeholder="Mot de passe"
             required>
             <mat-error *ngIf="passwordInput.invalid">Mauvais mot de passe</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput 
+            name="inviteCode"
+            ngModel
+            type="text" 
+            placeholder="Code Invitation"
+            #inviteCodeInput="ngModel"
+            required>
+            <mat-error *ngIf="inviteCodeInput.invalid">Entrez un code invitation</mat-error>
         </mat-form-field>
 
         <!--Imput-->

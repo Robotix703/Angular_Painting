@@ -36,7 +36,7 @@ export class DrawerViewComponent implements OnInit {
     //Structure des peintures
     //private colorExemple = new colorHTMLDisplay("Test", "green");
     public drawerColorsMapping = [
-        ["", "", ""],
+        ["<h1>Pas de couleur dans ce tiroir</h1>", "", ""],
         ["", "", ""],
         ["", "", ""],
         ["", "", ""],
