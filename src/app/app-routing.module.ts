@@ -39,7 +39,7 @@ const routes: Routes = [
     //Drawer
     { path: 'drawer/create', component: DrawerCreateComponent, canActivate: [AuthGuard] },
     { path: 'drawer/list', component: DrawerListComponent, canActivate: [AuthGuard] },
-    { path: 'drawer/view/:drawerName', component: DrawerViewComponent, canActivate: [AuthGuard] },
+    { path: 'drawer/view/:drawerName', component: DrawerViewComponent },
 
     //Routes filles
     { path: "auth", loadChildren: () => import("./auth/auth.module").then(module => module.AuthModule) }
