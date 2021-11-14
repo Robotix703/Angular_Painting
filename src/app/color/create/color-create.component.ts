@@ -132,7 +132,7 @@ export class ColorCreateComponent implements OnInit {
   onSaveColor() {
     if (this.formulaire.invalid) return;
 
-    const position = (this.formulaire.value.type == DrawerTypes[0]) ? coordDrawerCitadel[this.formulaire.value.colorSlot] : coordDrawerArmy[this.formulaire.value.colorSlot];
+    const position = (this.formulaire.value.gamme == DrawerTypes[0]) ? coordDrawerCitadel[this.formulaire.value.colorSlot] : coordDrawerArmy[this.formulaire.value.colorSlot];
 
     this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode, this.formulaire.value.drawerName, position.x, position.y);
     this.DrawersService.takeSlot(this.formulaire.value.colorSlot, this.formulaire.value.drawerName);

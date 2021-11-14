@@ -53,7 +53,7 @@ export class DrawersService {
   freeSlot(slot: Number, drawerName: string){
     const data = {
       slot: slot,
-      drawerName: drawerName
+      name: drawerName
     }
 
     this.http.post<Drawer>(URL_BACKEND + "freeSlot", data)

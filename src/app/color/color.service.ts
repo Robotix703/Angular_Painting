@@ -32,7 +32,7 @@ export class ColorsService {
 
     this.http.post<Color>(URL_BACKEND, colorData)
       .subscribe((responseData: Color) => {
-        this.router.navigate(["/"]);
+        this.router.navigate(["/color/list"]);
       });
   }
 
