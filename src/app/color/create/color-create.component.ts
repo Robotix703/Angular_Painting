@@ -2,14 +2,13 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ParamMap } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { Color } from '../color.model';
 import { ColorsService } from '../color.service';
 import { DrawersService } from 'src/app/drawer/drawer.service';
-import { Drawer } from 'src/app/drawer/drawer.model';
+import { coordDrawerArmy, coordDrawerCitadel, Drawer, DrawerTypes } from 'src/app/drawer/drawer.model';
 
 
 // Définition du composant
@@ -38,6 +37,8 @@ export class ColorCreateComponent implements OnInit {
   drawer: Drawer;
   drawersName = [];
   filteredDrawers: Observable<string[]>;
+  slots = [];
+  filteredSlots: Observable<string[]>;
 
   constructor(public ColorsService: ColorsService, public route: ActivatedRoute, public DrawersService: DrawersService) { }
 
@@ -66,8 +67,13 @@ export class ColorCreateComponent implements OnInit {
     return this.drawersName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  ngOnInit() {
+  private _filterSlots(value: string): string[] {
+    const filterValue = value.toLowerCase();
 
+    return this.slots.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  ngOnInit() {
     //Gestion de la récupération des tiroirs
     this.DrawersService.getDrawersNames();
     this.drawerSub = this.DrawersService.getDrawerUpdateListener()
@@ -79,7 +85,6 @@ export class ColorCreateComponent implements OnInit {
         );
       })
 
-
     //Filtre
     this.filteredGamme = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -90,7 +95,6 @@ export class ColorCreateComponent implements OnInit {
       map(value => this._filterTypes(value))
     );
     
-
     //Initialisation du formulaire
     this.formulaire = new FormGroup({
       name: new FormControl(null, {
@@ -108,23 +112,28 @@ export class ColorCreateComponent implements OnInit {
       drawerName: new FormControl(null, {
         validators: [Validators.minLength(1)]
       }),
-      positionX: new FormControl(null, {
-        validators: [Validators.min(0), Validators.max(4)]
-      }),
-      positionY: new FormControl(null, {
-        validators: [Validators.min(0), Validators.max(6)]
+      colorSlot: new FormControl(null, {
+        validators: [Validators.required]
       })
     });
   }
 
-  //Gestion du click
-  onSaveInstruction() {
-    //Vérification de la validité du formulaire
-    if (this.formulaire.invalid) {
-      return;
-    }
+  onChangeDrawer(event){
+    this.DrawersService.getDrawerByName(event.option.value).subscribe(drawerData => {
+      this.slots = drawerData.Drawers[0].emptySlot.map(String);
 
-    //Publication de la couleur
-    this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode, this.formulaire.value.drawerName, this.formulaire.value.positionX, this.formulaire.value.positionY);
+      this.filteredSlots = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterSlots(value))
+      );
+    })
+  }
+
+  onSaveColor() {
+    if (this.formulaire.invalid) return;
+
+    const position = (this.formulaire.value.type == DrawerTypes[0]) ? coordDrawerCitadel[this.formulaire.value.colorSlot] : coordDrawerArmy[this.formulaire.value.colorSlot];
+
+    this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode, this.formulaire.value.drawerName, position.x, position.y);
   }
 }
