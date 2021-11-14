@@ -78,7 +78,9 @@ export class DrawerViewComponent implements OnInit {
                     this.drawer = {
                         id: drawerData.Drawers[0]._id,
                         name: drawerData.Drawers[0].name,
-                        type: drawerData.Drawers[0].type
+                        type: drawerData.Drawers[0].type,
+                        emptySlot: drawerData.Drawers[0].emptySlot,
+                        isFull: drawerData.Drawers[0].isFull
                     }
                     this.DrawerType = drawerData.Drawers[0].type;
 
