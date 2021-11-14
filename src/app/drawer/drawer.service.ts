@@ -37,6 +37,30 @@ export class DrawersService {
         this.router.navigate(["/drawer/list"]);
       });
   }
+
+  takeSlot(slot: Number, drawerName: string){
+    const data = {
+      slot: slot,
+      name: drawerName
+    }
+
+    this.http.post<Drawer>(URL_BACKEND + "takeSlot", data)
+      .subscribe((responseData: Drawer) => {
+        console.log(responseData);
+      });
+  }
+
+  freeSlot(slot: Number, drawerName: string){
+    const data = {
+      slot: slot,
+      drawerName: drawerName
+    }
+
+    this.http.post<Drawer>(URL_BACKEND + "freeSlot", data)
+      .subscribe((responseData: Drawer) => {
+        console.log(responseData);
+      });
+  }
   
   getDrawers() {
     this.http.get<{ Drawers: any }>(URL_BACKEND)
