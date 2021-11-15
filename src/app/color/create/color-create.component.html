@@ -5,7 +5,7 @@
   <!--Utilisation de la balise Form pour simplifier la récupération d'informations par Angular-->
   <!--On indique l'opération à faire lors de l'événement submit-->
   <!--On passe en paramètre les données du formulaire géré par angular via ngForm-->
-  <form [formGroup]="formulaire" (submit)="onSaveInstruction()">
+  <form [formGroup]="formulaire" (submit)="onSaveColor()">
     <!--Nom-->
     <mat-form-field>
       <input matInput formControlName="name" type="text" placeholder="Nom">
@@ -45,23 +45,20 @@
     <!--Drawer name-->
     <input type="text" style="margin-bottom: 10px;" placeholder="Nom Tiroir" aria-label="Number" matInput
       formControlName="drawerName" [matAutocomplete]="autoDrawer">
-    <mat-autocomplete autoActiveFirstOption #autoDrawer="matAutocomplete">
+    <mat-autocomplete autoActiveFirstOption #autoDrawer="matAutocomplete" (optionSelected)="onChangeDrawer($event)">
       <mat-option *ngFor="let name of filteredDrawers | async" [value]="name">
         {{name}}
       </mat-option>
     </mat-autocomplete>
 
-    <!--Position X-->
-    <mat-form-field>
-      <input matInput formControlName="positionX" type="number" placeholder="Position X">
-      <mat-error *ngIf="formulaire.get('name').invalid">Position X</mat-error>
-    </mat-form-field>
-
-    <!--Position Y-->
-    <mat-form-field>
-      <input matInput formControlName="positionY" type="number" placeholder="Position Y">
-      <mat-error *ngIf="formulaire.get('colorCode').invalid">Position Y</mat-error>
-    </mat-form-field>
+    <!--Slot-->
+    <input type="text" style="margin-bottom: 10px;" placeholder="Emplacement Peinture" aria-label="Number" matInput
+      formControlName="colorSlot" [matAutocomplete]="autoSlot">
+    <mat-autocomplete autoActiveFirstOption #autoSlot="matAutocomplete">
+      <mat-option *ngFor="let slot of filteredSlots | async" [value]="slot">
+        {{slot}}
+      </mat-option>
+    </mat-autocomplete>
 
     <hr>
 

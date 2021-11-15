@@ -1,4 +1,3 @@
-// Importation de l'outil composant de Angular
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -22,10 +21,7 @@ import { DrawersService } from '../drawer.service';
 // Composant
 export class DrawerCreateComponent implements OnInit {
 
-  //ID
   private DrawerID: string;
-
-  //Tiroir à modifier
   drawer: Drawer;
 
   //Formulaire
@@ -44,14 +40,11 @@ export class DrawerCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    //Chargement des types
     this.filteredTypes = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterTypes(value))
     );
 
-    //Initialisation du formulaire
     this.formulaire = new FormGroup({
       name: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3), Validators.pattern(/^\S*$/)]
@@ -62,14 +55,9 @@ export class DrawerCreateComponent implements OnInit {
     });
   }
 
-  //Gestion du click
   onSaveInstruction() {
-    //Vérification de la validité du formulaire
-    if (this.formulaire.invalid) {
-      return;
-    }
+    if (this.formulaire.invalid) return;
 
-    //Publication du tiroir
-    this.DrawersService.writeDrawer(this.formulaire.value.name, this.formulaire.value.type);
+    this.DrawersService.createDrawer(this.formulaire.value.name, this.formulaire.value.type);
   }
 }

@@ -1,12 +1,12 @@
-// Importation de l'outil composant de Angular
 import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from '@angular/core'
-import { ActivatedRoute, ParamMap, Router, RouterModule } from '@angular/router';
-
-//gestion des abonnements
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+
 import { AuthService } from 'src/app/auth/auth.service';
+import { coordDrawerArmy, coordDrawerCitadel, DrawerTypes } from 'src/app/drawer/drawer.model';
 import { Color } from '../color.model';
 import { ColorsService } from '../color.service';
+import { DrawersService } from 'src/app/drawer/drawer.service';
 
 // Définition du composant
 @Component({
@@ -23,20 +23,15 @@ import { ColorsService } from '../color.service';
 // Composant
 export class ColorListComponent implements OnInit, OnDestroy {
 
-  //Liste des couleurs
   colors = [];
 
-  //Nombre de couleurs
   totalColors;
   colorGreen = "green"
 
-  //Système de connexion
   userIsAuthenticated = false;
   userId = null;
 
   showFiller = true;
-
-  //Système de filtre
   l_gamme = "";
   l_type = "";
 
@@ -44,68 +39,60 @@ export class ColorListComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   private colorsSub: Subscription;
 
-  //Créé un membre de la classe de type ColorService
   constructor(private colorService: ColorsService,
+    private drawerService: DrawersService,
     private authService: AuthService,
     public route: ActivatedRoute,
     private cdr: ChangeDetectorRef) { }
 
-  //Exécuté à l'init
   ngOnInit() {
-    //Demande récupération des couleurs
     this.colorService.getColors();
 
-    //Gestion de la récupération des couleurs
     this.colorsSub = this.colorService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[] }) => {
-        //Récupération des couleurs
+
         this.colors = colorData.color;
         this.totalColors = colorData.color.length;
       })
 
-    //Première mise à jour de l'état de connexion
     this.userIsAuthenticated = this.authService.getIsAuth();
 
-    //Abonnement au système de connexion
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
     });
   }
 
-  //Gestion de la suppression des données
-  onDelete(colorID: string) {
-    //Appel au système de suppression
+  onDelete(color: Color) {
+    const colorID = color.id;
+    const drawerName = color.drawerName;
+    const position  = {x: color.positionX, y: color.positionY};
+    const slot = (color.gamme == DrawerTypes[0]) ? coordDrawerCitadel.findIndex(e => e.x == position.x && e.y == position.y) : coordDrawerArmy.findIndex(e => e.x == position.x && e.y == position.y);
+
+    this.drawerService.freeSlot(slot, drawerName);
+
     this.colorService.deleteColor(colorID).subscribe(() => {
       this.colorService.getColors();
     });
   }
 
-  //Destructeur
   ngOnDestroy() {
-    //Désabonnement
     this.authStatusSub.unsubscribe();
   }
 
-  //Selection d'une gamme
   selectGamme(gamme: string){
-    //MAJ gamme
     this.l_gamme = (gamme == "tout" ? "" : gamme);
-    //Demande récupération des couleurs via les filtres
+
     this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
   }
 
-  //Selection d'un type
   selectType(type: string){
-    //MAJ type
     this.l_type = (type == "tout" ? "" : type);
-   //Demande récupération des couleurs via les filtres
-   this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
+
+    this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
   }
 
-  //Recherche
   search(event){
-    //Appel service
     this.colorService.getColorsName(event.target.value);
   }
 }

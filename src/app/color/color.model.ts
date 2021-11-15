@@ -13,9 +13,9 @@ export interface Color {
   //Nom du tiroir
   drawerName: string;
   //Position X dans le tiroir
-  positionX: Number;
+  positionX: number;
   //Position Y dans le tiroir
-  positionY: Number;
+  positionY: number;
 }
 
 export class colorHTMLDisplay {
