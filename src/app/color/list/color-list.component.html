@@ -25,7 +25,7 @@
 <mat-drawer-container class="container" autosize>
   <mat-accordion *ngIf="colors.length > 0">
     <!--Conteneur des tuiles par figurines-->
-    <mat-card *ngFor="let color of colors">
+    <mat-card *ngFor="let color of colors" [ngStyle]="{'background-color': color.toBuy}">
       <!--Header-->
       <mat-card-title style="margin-bottom: 1rem;">
         {{ color.name }}

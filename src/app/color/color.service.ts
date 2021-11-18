@@ -54,7 +54,8 @@ export class ColorsService {
               colorCode: color.colorCode,
               drawerName: color.drawerName,
               positionX: color.positionX,
-              positionY: color.positionY
+              positionY: color.positionY,
+              toBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
@@ -80,7 +81,8 @@ export class ColorsService {
               colorCode: color.colorCode,
               drawerName: color.drawerName,
               positionX: color.positionX,
-              positionY: color.positionY
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false
             }
           })
         }
@@ -106,7 +108,8 @@ export class ColorsService {
               colorCode: color.colorCode,
               drawerName: color.drawerName,
               positionX: color.positionX,
-              positionY: color.positionY
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false
             }
           })
         }
@@ -132,7 +135,8 @@ export class ColorsService {
               colorCode: color.colorCode,
               drawerName: color.drawerName,
               positionX: color.positionX,
-              positionY: color.positionY
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false
             }
           })
         }
