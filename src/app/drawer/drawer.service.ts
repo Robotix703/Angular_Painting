@@ -102,6 +102,24 @@ export class DrawersService {
       });
   }
 
+  getDrawersNotFullNames() {
+    this.http.get<{ Drawers: any }>(URL_BACKEND + "/notFull")
+
+      .pipe(map((data) => {
+        return {
+          drawers: data.Drawers.map(drawer => {
+            return {
+              name: drawer.name
+            }
+          })
+        }
+      }))
+      .subscribe((transformedDrawer) => {
+        this.drawer = transformedDrawer.drawers;
+        this.drawerUpdated.next({ drawer: [...this.drawer] });
+      });
+  }
+
   getDrawersByType(type: string) {
     const queryParams = `type?type=${type}`;
 
