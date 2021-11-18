@@ -92,6 +92,10 @@ export class ColorListComponent implements OnInit, OnDestroy {
     this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
   }
 
+  selectToBuy(toBuy: any){
+    this.colorService.getColorsToBuy(toBuy.checked);
+  }
+
   search(event){
     this.colorService.getColorsName(event.target.value);
   }

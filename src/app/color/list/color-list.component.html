@@ -25,7 +25,7 @@
 <mat-drawer-container class="container" autosize>
   <mat-accordion *ngIf="colors.length > 0">
     <!--Conteneur des tuiles par figurines-->
-    <mat-card *ngFor="let color of colors" [ngStyle]="{'background-color': color.toBuy}">
+    <mat-card *ngFor="let color of colors" [ngStyle]="{'background-color': color.backgroundToBuy}">
       <!--Header-->
       <mat-card-title style="margin-bottom: 1rem;">
         {{ color.name }}
@@ -53,7 +53,7 @@
   <p class="info-text mat-body-1" *ngIf="colors.length == 0">Aucune Couleurs</p>
 
   <!--Remplissage-->
-  <mat-accordion *ngIf="colors.length <= 1">
+  <mat-accordion *ngIf="colors.length <= 12">
     <div style="visibility: hidden;">
       <p style="height: 300px;">REMPLISSAGE</p>
     </div>
@@ -85,5 +85,9 @@
         <mat-option value="Contrast">Contrast</mat-option>
       </mat-select>
     </mat-form-field>
+
+    <!--ToBuy-->
+    <h4>Filtre</h4>
+    <mat-checkbox class="example-margin" (change)="selectToBuy($event)">A acheter</mat-checkbox>
   </mat-drawer>
 </mat-drawer-container>

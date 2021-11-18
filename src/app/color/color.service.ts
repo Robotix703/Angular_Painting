@@ -55,7 +55,8 @@ export class ColorsService {
               drawerName: color.drawerName,
               positionX: color.positionX,
               positionY: color.positionY,
-              toBuy: color.toBuy ? "#cbd800" : undefined
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
@@ -82,7 +83,37 @@ export class ColorsService {
               drawerName: color.drawerName,
               positionX: color.positionX,
               positionY: color.positionY,
-              toBuy: color.toBuy ? color.toBuy : false
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
+            }
+          })
+        }
+      }))
+      .subscribe((transformedColor) => {
+        this.color = transformedColor.colors;
+        this.colorUpdated.next({ color: [...this.color] });
+      });
+  }
+
+  getColorsToBuy(toBuy: boolean) {
+    const l_toBuy = toBuy ? "true" : "false";
+    const queryParams = `toBuy?toBuy=${l_toBuy}`;
+
+    this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)
+      .pipe(map((data) => {
+        return {
+          colors: data.Colors.map(color => {
+            return {
+              id: color._id,
+              name: color.name,
+              gamme: color.gamme,
+              type: color.type,
+              colorCode: color.colorCode,
+              drawerName: color.drawerName,
+              positionX: color.positionX,
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
@@ -109,7 +140,8 @@ export class ColorsService {
               drawerName: color.drawerName,
               positionX: color.positionX,
               positionY: color.positionY,
-              toBuy: color.toBuy ? color.toBuy : false
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
@@ -136,7 +168,8 @@ export class ColorsService {
               drawerName: color.drawerName,
               positionX: color.positionX,
               positionY: color.positionY,
-              toBuy: color.toBuy ? color.toBuy : false
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
