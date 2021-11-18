@@ -19,7 +19,7 @@ export class ColorsService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  writeColor(name: string, gamme: string, type: string, colorCode: string, drawerName: string, positionX: Number, positionY: Number) {
+  writeColor(name: string, gamme: string, type: string, colorCode: string, drawerName: string, positionX: Number, positionY: Number, toBuy: Boolean) {
     const colorData = {
       name: name,
       gamme: gamme,
@@ -27,7 +27,8 @@ export class ColorsService {
       colorCode: colorCode,
       drawerName: drawerName,
       positionX: positionX,
-      positionY: positionY
+      positionY: positionY,
+      toBuy: toBuy
     }
 
     this.http.post<Color>(URL_BACKEND, colorData)
