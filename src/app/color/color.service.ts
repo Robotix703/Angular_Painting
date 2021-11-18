@@ -37,6 +37,24 @@ export class ColorsService {
       });
   }
 
+  updateColor(id:string, name: string, gamme: string, type: string, colorCode: string, drawerName: string, positionX: Number, positionY: Number, toBuy: Boolean) {
+    const colorData = {
+      name: name,
+      gamme: gamme,
+      type: type,
+      colorCode: colorCode,
+      drawerName: drawerName,
+      positionX: positionX,
+      positionY: positionY,
+      toBuy: toBuy
+    }
+
+    this.http.put<Color>(URL_BACKEND + "/" + id, colorData)
+      .subscribe((responseData: Color) => {
+        this.getColors();
+      });
+  }
+
   getColorUpdateListener() {
     return this.colorUpdated.asObservable();
   }

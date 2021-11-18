@@ -76,6 +76,20 @@ export class ColorListComponent implements OnInit, OnDestroy {
     });
   }
 
+  buyColor(color: Color){
+    this.colorService.updateColor(
+      color.id,
+      color.name,
+      color.gamme,
+      color.type,
+      color.colorCode,
+      color.drawerName,
+      color.positionX,
+      color.positionY,
+      false
+    )
+  }
+
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
   }
