@@ -19,7 +19,7 @@ export class ColorsService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  writeColor(name: string, gamme: string, type: string, colorCode: string, drawerName: string, positionX: Number, positionY: Number) {
+  writeColor(name: string, gamme: string, type: string, colorCode: string, drawerName: string, positionX: Number, positionY: Number, toBuy: Boolean) {
     const colorData = {
       name: name,
       gamme: gamme,
@@ -27,12 +27,31 @@ export class ColorsService {
       colorCode: colorCode,
       drawerName: drawerName,
       positionX: positionX,
-      positionY: positionY
+      positionY: positionY,
+      toBuy: toBuy
     }
 
     this.http.post<Color>(URL_BACKEND, colorData)
       .subscribe((responseData: Color) => {
         this.router.navigate(["/color/list"]);
+      });
+  }
+
+  updateColor(id:string, name: string, gamme: string, type: string, colorCode: string, drawerName: string, positionX: Number, positionY: Number, toBuy: Boolean) {
+    const colorData = {
+      name: name,
+      gamme: gamme,
+      type: type,
+      colorCode: colorCode,
+      drawerName: drawerName,
+      positionX: positionX,
+      positionY: positionY,
+      toBuy: toBuy
+    }
+
+    this.http.put<Color>(URL_BACKEND + "/" + id, colorData)
+      .subscribe((responseData: Color) => {
+        this.getColors();
       });
   }
 
@@ -53,7 +72,9 @@ export class ColorsService {
               colorCode: color.colorCode,
               drawerName: color.drawerName,
               positionX: color.positionX,
-              positionY: color.positionY
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
@@ -79,7 +100,38 @@ export class ColorsService {
               colorCode: color.colorCode,
               drawerName: color.drawerName,
               positionX: color.positionX,
-              positionY: color.positionY
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
+            }
+          })
+        }
+      }))
+      .subscribe((transformedColor) => {
+        this.color = transformedColor.colors;
+        this.colorUpdated.next({ color: [...this.color] });
+      });
+  }
+
+  getColorsToBuy(toBuy: boolean) {
+    const l_toBuy = toBuy ? "true" : "false";
+    const queryParams = `toBuy?toBuy=${l_toBuy}`;
+
+    this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)
+      .pipe(map((data) => {
+        return {
+          colors: data.Colors.map(color => {
+            return {
+              id: color._id,
+              name: color.name,
+              gamme: color.gamme,
+              type: color.type,
+              colorCode: color.colorCode,
+              drawerName: color.drawerName,
+              positionX: color.positionX,
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
@@ -105,7 +157,9 @@ export class ColorsService {
               colorCode: color.colorCode,
               drawerName: color.drawerName,
               positionX: color.positionX,
-              positionY: color.positionY
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
@@ -131,7 +185,9 @@ export class ColorsService {
               colorCode: color.colorCode,
               drawerName: color.drawerName,
               positionX: color.positionX,
-              positionY: color.positionY
+              positionY: color.positionY,
+              toBuy: color.toBuy ? color.toBuy : false,
+              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
           })
         }
