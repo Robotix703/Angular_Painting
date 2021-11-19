@@ -24,9 +24,7 @@ import { DrawersService } from 'src/app/drawer/drawer.service';
 export class ColorListComponent implements OnInit, OnDestroy {
 
   colors = [];
-
   totalColors;
-  colorGreen = "green"
 
   userIsAuthenticated = false;
   userId = null;

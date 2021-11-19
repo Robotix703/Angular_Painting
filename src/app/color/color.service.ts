@@ -16,6 +16,7 @@ export class ColorsService {
 
   private color: Color[] = [];
   private colorUpdated = new Subject<{ color: Color[] }>();
+  private colorLimite = 100;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -60,7 +61,7 @@ export class ColorsService {
   }
 
   getColors() {
-    this.http.get<{ Colors: any }>(URL_BACKEND)
+    this.http.get<{ Colors: any }>(URL_BACKEND + '?limit=' + this.colorLimite)
       .pipe(map((data) => {
         return {
           colors: data.Colors.map(color => {
@@ -86,7 +87,7 @@ export class ColorsService {
   }
 
   getColorsFiltre(gamme: string, type: string) {
-    const queryParams = `filtre?gamme=${gamme}&type=${type}`;
+    const queryParams = `filtre?gamme=${gamme}&type=${type}&limit=${this.colorLimite}`;
 
     this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)
       .pipe(map((data) => {
