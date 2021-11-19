@@ -63,16 +63,19 @@ export class ColorListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(color: Color) {
-    const colorID = color.id;
-    const drawerName = color.drawerName;
-    const position  = {x: color.positionX, y: color.positionY};
-    const slot = (color.gamme == DrawerTypes[0]) ? coordDrawerCitadel.findIndex(e => e.x == position.x && e.y == position.y) : coordDrawerArmy.findIndex(e => e.x == position.x && e.y == position.y);
+    if(this.clickMethod(color.name))
+    {
+      const colorID = color.id;
+      const drawerName = color.drawerName;
+      const position  = {x: color.positionX, y: color.positionY};
+      const slot = (color.gamme == DrawerTypes[0]) ? coordDrawerCitadel.findIndex(e => e.x == position.x && e.y == position.y) : coordDrawerArmy.findIndex(e => e.x == position.x && e.y == position.y);
 
-    this.drawerService.freeSlot(slot, drawerName);
+      this.drawerService.freeSlot(slot, drawerName);
 
-    this.colorService.deleteColor(colorID).subscribe(() => {
-      this.colorService.getColors();
-    });
+      this.colorService.deleteColor(colorID).subscribe(() => {
+        this.colorService.getColors();
+      });
+    }
   }
 
   buyColor(color: Color){
@@ -115,5 +118,9 @@ export class ColorListComponent implements OnInit, OnDestroy {
 
   updateLimit(limit){
     this.colorService.colorLimite = limit;
+  }
+
+  clickMethod(name: string) {
+    return confirm("Confirmez la suppression de " + name);
   }
 }

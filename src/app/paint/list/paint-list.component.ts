@@ -124,17 +124,21 @@ export class PaintListComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Gestion de la suppression des données
-  onDelete(figurineID: string) {
-    //Appel au système de suppression
-    this.paintService.deleteInstruction(figurineID).subscribe(() => {
-      this.paintService.getInstructions(this.figurineID);
-    });
+  onDelete(instructionID: string) {
+    const instructionName = this.instructions.find(e => e.id == instructionID).name;
+    if(this.clickMethod(instructionName))
+    {
+      this.paintService.deleteInstruction(instructionID).subscribe(() => {
+        this.paintService.getInstructions(this.figurineID);
+      });
+    }
   }
 
-  //Destructeur
   ngOnDestroy() {
-    //Désabonnement
     this.authStatusSub.unsubscribe();
+  }
+
+  clickMethod(name: string) {
+    return confirm("Confirmez la suppression de " + name);
   }
 }
