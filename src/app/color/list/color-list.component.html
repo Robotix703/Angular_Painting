@@ -16,7 +16,18 @@
   </button>
 
   <!--Création couleur-->
-  <a mat-raised-button color="primary" [routerLink]="['/color/create']">Ajouter Couleur</a>
+  <a mat-raised-button color="primary" [routerLink]="['/color/create']" style="margin: 1rem;">Ajouter Couleur</a>
+
+  <!--Nombre d'items-->
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre d'items</mat-label>
+    <mat-select (selectionChange)="updateLimit($event.value)" [(value)]="selected">
+      <mat-option value="25">25</mat-option>
+      <mat-option value="50">50</mat-option>
+      <mat-option value="100" default>100</mat-option>
+      <mat-option value="150">150</mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <!--Indication du nombre de couleurs-->
   <h1 style="margin: 1rem;">Nombre de couleurs : {{totalColors}}</h1>

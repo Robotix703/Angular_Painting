@@ -32,6 +32,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
   showFiller = true;
   l_gamme = "";
   l_type = "";
+  selected = "100";
 
   //Abonnement
   private authStatusSub: Subscription;
@@ -47,10 +48,10 @@ export class ColorListComponent implements OnInit, OnDestroy {
     this.colorService.getColors();
 
     this.colorsSub = this.colorService.getColorUpdateListener()
-      .subscribe((colorData: { color: Color[] }) => {
+      .subscribe((colorData: { color: Color[], maxColors: number }) => {
 
         this.colors = colorData.color;
-        this.totalColors = colorData.color.length;
+        this.totalColors = colorData.maxColors;
       })
 
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -110,5 +111,9 @@ export class ColorListComponent implements OnInit, OnDestroy {
 
   search(event){
     this.colorService.getColorsName(event.target.value);
+  }
+
+  updateLimit(limit){
+    this.colorService.colorLimite = limit;
   }
 }
