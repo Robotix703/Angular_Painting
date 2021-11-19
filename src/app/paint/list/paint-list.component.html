@@ -39,6 +39,24 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <!--Drawer Column-->
+          <ng-container matColumnDef="drawerName">
+            <th mat-header-cell *matHeaderCellDef> Tiroir </th>
+            <td mat-cell *matCellDef="let element"> {{element.drawerName}} </td>
+          </ng-container>
+
+          <!--PositionX Column-->
+          <ng-container matColumnDef="positionX">
+            <th mat-header-cell *matHeaderCellDef> Position X </th>
+            <td mat-cell *matCellDef="let element"> {{element.positionX}} </td>
+          </ng-container>
+
+          <!--PositionY Column-->
+          <ng-container matColumnDef="positionY">
+            <th mat-header-cell *matHeaderCellDef> Position Y </th>
+            <td mat-cell *matCellDef="let element"> {{element.positionY}} </td>
+          </ng-container>
         </table>
       </div>
     </mat-dialog-content>

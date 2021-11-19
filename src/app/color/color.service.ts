@@ -15,7 +15,8 @@ const URL_BACKEND = environment.apiURL + "color/";
 export class ColorsService {
 
   private color: Color[] = [];
-  private colorUpdated = new Subject<{ color: Color[] }>();
+  private colorUpdated = new Subject<{ color: Color[], maxColors: number }>();
+  public colorLimite = 100;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -60,7 +61,7 @@ export class ColorsService {
   }
 
   getColors() {
-    this.http.get<{ Colors: any }>(URL_BACKEND)
+    this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + '?limit=' + this.colorLimite)
       .pipe(map((data) => {
         return {
           colors: data.Colors.map(color => {
@@ -76,19 +77,20 @@ export class ColorsService {
               toBuy: color.toBuy ? color.toBuy : false,
               backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
-          })
+          }),
+          maxColors : data.maxColors
         }
       }))
       .subscribe((transformedColor) => {
         this.color = transformedColor.colors;
-        this.colorUpdated.next({ color: [...this.color] });
+        this.colorUpdated.next({ color: [...this.color], maxColors: transformedColor.maxColors });
       });
   }
 
   getColorsFiltre(gamme: string, type: string) {
-    const queryParams = `filtre?gamme=${gamme}&type=${type}`;
+    const queryParams = `filtre?gamme=${gamme}&type=${type}&limit=${this.colorLimite}`;
 
-    this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)
+    this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + queryParams)
       .pipe(map((data) => {
         return {
           colors: data.Colors.map(color => {
@@ -104,12 +106,13 @@ export class ColorsService {
               toBuy: color.toBuy ? color.toBuy : false,
               backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
-          })
+          }),
+          maxColors : data.maxColors
         }
       }))
       .subscribe((transformedColor) => {
         this.color = transformedColor.colors;
-        this.colorUpdated.next({ color: [...this.color] });
+        this.colorUpdated.next({ color: [...this.color], maxColors: transformedColor.maxColors });
       });
   }
 
@@ -117,7 +120,7 @@ export class ColorsService {
     const l_toBuy = toBuy ? "true" : "false";
     const queryParams = `toBuy?toBuy=${l_toBuy}`;
 
-    this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)
+    this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + queryParams)
       .pipe(map((data) => {
         return {
           colors: data.Colors.map(color => {
@@ -133,19 +136,20 @@ export class ColorsService {
               toBuy: color.toBuy ? color.toBuy : false,
               backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
-          })
+          }),
+          maxColors : data.maxColors
         }
       }))
       .subscribe((transformedColor) => {
         this.color = transformedColor.colors;
-        this.colorUpdated.next({ color: [...this.color] });
+        this.colorUpdated.next({ color: [...this.color], maxColors: transformedColor.maxColors });
       });
   }
 
   getColorsName(name: string) {
     const queryParams = `nom?nom=${name}`;
 
-    this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)
+    this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + queryParams)
       .pipe(map((data) => {
         return {
           colors: data.Colors.map(color => {
@@ -161,19 +165,20 @@ export class ColorsService {
               toBuy: color.toBuy ? color.toBuy : false,
               backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
-          })
+          }),
+          maxColors : data.maxColors
         }
       }))
       .subscribe((transformedColor) => {
         this.color = transformedColor.colors;
-        this.colorUpdated.next({ color: [...this.color] });
+        this.colorUpdated.next({ color: [...this.color], maxColors: transformedColor.maxColors });
       });
   }
 
   getColorsFromDrawer(drawerName: string) {
     const queryParams = `drawerName?drawerName=${drawerName}`;
 
-    this.http.get<{ Colors: any }>(URL_BACKEND + queryParams)
+    this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + queryParams)
       .pipe(map((data) => {
         return {
           colors: data.Colors.map(color => {
@@ -189,12 +194,13 @@ export class ColorsService {
               toBuy: color.toBuy ? color.toBuy : false,
               backgroundToBuy: color.toBuy ? "#cbd800" : undefined
             }
-          })
+          }),
+          maxColors : data.maxColors
         }
       }))
       .subscribe((transformedColor) => {
         this.color = transformedColor.colors;
-        this.colorUpdated.next({ color: [...this.color] });
+        this.colorUpdated.next({ color: [...this.color], maxColors: transformedColor.maxColors });
       });
   }
 

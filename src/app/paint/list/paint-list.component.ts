@@ -50,7 +50,7 @@ export class PaintListComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private changeDetectorRefs: ChangeDetectorRef) { }
 
-  displayedColumns: string[] = ['name', 'gamme'];
+  displayedColumns: string[] = ['name', 'gamme', 'drawerName', 'positionX', 'positionY'];
   //dataSource = ELEMENT_DATA;
   dataSource = [];
 
@@ -95,21 +95,18 @@ export class PaintListComponent implements OnInit, OnDestroy {
         //Parcours des instructions
         for (let i = 0; i < this.instructions.length; i++) {
 
-          //RAZ instructionColor
           instructionColor = [];
 
           if (this.instructions[i].paintID == "") {
-            let emptyColor = { id: "", name: "", gamme: "" };
+            let emptyColor = { id: "", name: "", gamme: "", drawerName: "", positionX: "", positionY: "" };
             instructionColor.push(emptyColor)
           }
           else {
-            //Parcours de la liste des ID de couleurs
             for (let j = 0; j < this.instructions[i].paintID.length; j++) {
               instructionColor.push(colorData.color.find(e => e.id === this.instructions[i].paintID[j]))
             }
           }
 
-          //Copie des couleur de l'instruction dans instruction
           this.instructions[i].paintColor = [...instructionColor];
         }
 
@@ -127,17 +124,21 @@ export class PaintListComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Gestion de la suppression des données
-  onDelete(figurineID: string) {
-    //Appel au système de suppression
-    this.paintService.deleteInstruction(figurineID).subscribe(() => {
-      this.paintService.getInstructions(this.figurineID);
-    });
+  onDelete(instructionID: string) {
+    const instructionName = this.instructions.find(e => e.id == instructionID).name;
+    if(this.clickMethod(instructionName))
+    {
+      this.paintService.deleteInstruction(instructionID).subscribe(() => {
+        this.paintService.getInstructions(this.figurineID);
+      });
+    }
   }
 
-  //Destructeur
   ngOnDestroy() {
-    //Désabonnement
     this.authStatusSub.unsubscribe();
+  }
+
+  clickMethod(name: string) {
+    return confirm("Confirmez la suppression de " + name);
   }
 }

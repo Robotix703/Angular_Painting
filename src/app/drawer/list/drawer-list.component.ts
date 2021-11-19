@@ -56,9 +56,13 @@ export class DrawerListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(drawerID: string) {
-    this.drawerService.deleteDrawer(drawerID).subscribe(() => {
-      this.drawerService.getDrawers();
-    });
+    const drawerName = this.drawers.find(e => e.id == drawerID).name;
+    if(this.clickMethod(drawerName))
+    {
+      this.drawerService.deleteDrawer(drawerID).subscribe(() => {
+        this.drawerService.getDrawers();
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -73,5 +77,9 @@ export class DrawerListComponent implements OnInit, OnDestroy {
 
   search(event){
     this.drawerService.getDrawerByName(event.target.value);
+  }
+
+  clickMethod(name: string) {
+    return confirm("Confirmez la suppression de " + name);
   }
 }

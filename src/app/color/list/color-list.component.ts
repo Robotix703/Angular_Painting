@@ -24,9 +24,7 @@ import { DrawersService } from 'src/app/drawer/drawer.service';
 export class ColorListComponent implements OnInit, OnDestroy {
 
   colors = [];
-
   totalColors;
-  colorGreen = "green"
 
   userIsAuthenticated = false;
   userId = null;
@@ -34,6 +32,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
   showFiller = true;
   l_gamme = "";
   l_type = "";
+  selected = "100";
 
   //Abonnement
   private authStatusSub: Subscription;
@@ -49,10 +48,10 @@ export class ColorListComponent implements OnInit, OnDestroy {
     this.colorService.getColors();
 
     this.colorsSub = this.colorService.getColorUpdateListener()
-      .subscribe((colorData: { color: Color[] }) => {
+      .subscribe((colorData: { color: Color[], maxColors: number }) => {
 
         this.colors = colorData.color;
-        this.totalColors = colorData.color.length;
+        this.totalColors = colorData.maxColors;
       })
 
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -64,16 +63,19 @@ export class ColorListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(color: Color) {
-    const colorID = color.id;
-    const drawerName = color.drawerName;
-    const position  = {x: color.positionX, y: color.positionY};
-    const slot = (color.gamme == DrawerTypes[0]) ? coordDrawerCitadel.findIndex(e => e.x == position.x && e.y == position.y) : coordDrawerArmy.findIndex(e => e.x == position.x && e.y == position.y);
+    if(this.clickMethod(color.name))
+    {
+      const colorID = color.id;
+      const drawerName = color.drawerName;
+      const position  = {x: color.positionX, y: color.positionY};
+      const slot = (color.gamme == DrawerTypes[0]) ? coordDrawerCitadel.findIndex(e => e.x == position.x && e.y == position.y) : coordDrawerArmy.findIndex(e => e.x == position.x && e.y == position.y);
 
-    this.drawerService.freeSlot(slot, drawerName);
+      this.drawerService.freeSlot(slot, drawerName);
 
-    this.colorService.deleteColor(colorID).subscribe(() => {
-      this.colorService.getColors();
-    });
+      this.colorService.deleteColor(colorID).subscribe(() => {
+        this.colorService.getColors();
+      });
+    }
   }
 
   buyColor(color: Color){
@@ -112,5 +114,13 @@ export class ColorListComponent implements OnInit, OnDestroy {
 
   search(event){
     this.colorService.getColorsName(event.target.value);
+  }
+
+  updateLimit(limit){
+    this.colorService.colorLimite = limit;
+  }
+
+  clickMethod(name: string) {
+    return confirm("Confirmez la suppression de " + name);
   }
 }
