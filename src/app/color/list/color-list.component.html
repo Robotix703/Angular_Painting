@@ -21,7 +21,7 @@
   <!--Nombre d'items-->
   <mat-form-field appearance="fill" style="margin: 1rem;">
     <mat-label>Nombre d'items</mat-label>
-    <mat-select (selectionChange)="updateLimit($event.value)" [(value)]="selected">
+    <mat-select (selectionChange)="updateLimit($event.value)" [(value)]="l_colorLimit">
       <mat-option value="25">25</mat-option>
       <mat-option value="50">50</mat-option>
       <mat-option value="100" default>100</mat-option>

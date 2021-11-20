@@ -10,7 +10,6 @@ import { ColorsService } from '../color.service';
 import { DrawersService } from 'src/app/drawer/drawer.service';
 import { coordDrawerArmy, coordDrawerCitadel, Drawer, DrawerTypes } from 'src/app/drawer/drawer.model';
 
-
 // Définition du composant
 @Component({
   //Nom

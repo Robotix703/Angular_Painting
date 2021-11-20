@@ -32,7 +32,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
   showFiller = true;
   l_gamme = "";
   l_type = "";
-  selected = "100";
+  l_colorLimit = "100";
 
   //Abonnement
   private authStatusSub: Subscription;
@@ -45,7 +45,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.colorService.getColors();
+    this.colorService.getColors(parseInt(this.l_colorLimit));
 
     this.colorsSub = this.colorService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[], maxColors: number }) => {
@@ -73,7 +73,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
       this.drawerService.freeSlot(slot, drawerName);
 
       this.colorService.deleteColor(colorID).subscribe(() => {
-        this.colorService.getColors();
+        this.colorService.getColors(parseInt(this.l_colorLimit));
       });
     }
   }
@@ -117,7 +117,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
   }
 
   updateLimit(limit){
-    this.colorService.colorLimite = limit;
+    this.l_colorLimit = limit;
   }
 
   clickMethod(name: string) {

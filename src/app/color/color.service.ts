@@ -16,7 +16,7 @@ export class ColorsService {
 
   private color: Color[] = [];
   private colorUpdated = new Subject<{ color: Color[], maxColors: number }>();
-  public colorLimite = 100;
+  public colorLimite = -1;
 
   constructor(private http: HttpClient, private router: Router) { }
 

@@ -100,7 +100,7 @@ export class PaintCreateComponent implements OnInit {
       })
     });
 
-    this.ColorsService.getColors(500);
+    this.ColorsService.getColors();
 
     this.colorsSub = this.ColorsService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[] }) => {
