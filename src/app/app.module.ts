@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,6 +16,7 @@ import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { AngularMaterialModule } from './angular-material.component';
 import { AuthRoutingModule } from './auth/auth-routing.module';
+
 import { FigurineModule } from './figurine/figurine.module';
 import { PaintModule } from './paint/paint.module';
 import { ColorModule } from './color/color.module';
@@ -36,7 +38,8 @@ import { DrawerModule } from './drawer/drawer.module';
     BrowserAnimationsModule,
     AngularMaterialModule,
     HttpClientModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    ColorPickerModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

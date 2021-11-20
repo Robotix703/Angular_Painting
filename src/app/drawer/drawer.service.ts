@@ -46,7 +46,7 @@ export class DrawersService {
 
     this.http.post<Drawer>(URL_BACKEND + "takeSlot", data)
       .subscribe((responseData: Drawer) => {
-        console.log(responseData);
+        //console.log(responseData);
       });
   }
 

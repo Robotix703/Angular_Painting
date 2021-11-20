@@ -5,6 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '../angular-material.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { ColorCreateComponent } from './create/color-create.component';
 import { ColorListComponent } from './list/color-list.component';
 
@@ -20,7 +22,8 @@ import { ColorListComponent } from './list/color-list.component';
     AngularMaterialModule,
     MatFormFieldModule,
     RouterModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ColorPickerModule
   ]
 })
 export class ColorModule { }

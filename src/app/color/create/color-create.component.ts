@@ -115,9 +115,7 @@ export class ColorCreateComponent implements OnInit {
       colorSlot: new FormControl(null, {
         validators: [Validators.required]
       }),
-      toBuy: new FormControl(null, {
-        validators: [Validators.required]
-      })
+      toBuy: new FormControl(null, {})
     });
   }
 
@@ -139,5 +137,11 @@ export class ColorCreateComponent implements OnInit {
 
     this.ColorsService.writeColor(this.formulaire.value.name, this.formulaire.value.gamme, this.formulaire.value.type, this.formulaire.value.colorCode, this.formulaire.value.drawerName, position.x, position.y, this.formulaire.value.toBuy);
     this.DrawersService.takeSlot(this.formulaire.value.colorSlot, this.formulaire.value.drawerName);
+  }
+
+  onColorPichupChange(event){
+    this.formulaire.patchValue(
+      {colorCode: event}
+    )
   }
 }

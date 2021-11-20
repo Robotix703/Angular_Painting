@@ -14,7 +14,7 @@
 
     <!--ColorCode-->
     <mat-form-field>
-      <input matInput formControlName="colorCode" type="text" placeholder="Code Couleur">
+      <input matInput formControlName="colorCode" [(colorPicker)]="color" [style.background]="color" (colorPickerChange)="onColorPichupChange($event)"/>
       <mat-error *ngIf="formulaire.get('colorCode').invalid">Entrez un code couleur</mat-error>
     </mat-form-field>
 
