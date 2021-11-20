@@ -1,17 +1,18 @@
 // Importation de l'outil composant de Angular
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ParamMap } from '@angular/router';
-import { Instruction } from '../paint.model';
-import { PaintsService } from '../paint.service';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Observable, Subscription } from 'rxjs';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { ColorsService } from 'src/app/color/color.service';
 import { map, startWith } from 'rxjs/operators';
+
+import { ColorsService } from 'src/app/color/color.service';
 import { Color } from 'src/app/color/color.model';
+import { Instruction } from '../paint.model';
+import { PaintsService } from '../paint.service';
 
 // Définition du composant
 @Component({
@@ -23,12 +24,9 @@ import { Color } from 'src/app/color/color.model';
   styleUrls: ['./paint-edit.component.css']
 })
 
-// Composant
 export class PaintEditComponent implements OnInit {
 
-  //ID
   private InstructionID: string;
-  //Instruction à modifier
   instruction: Instruction;
 
   visible = true;
@@ -39,48 +37,38 @@ export class PaintEditComponent implements OnInit {
   filteredCouleurs: Observable<string[]>;
   couleurs: string[] = [];
   allCouleurs: string[] = [];
-
-  //Formulaire
-  formulaire: FormGroup;
-
-  //Color
   colors = [];
 
-  //Abonnement aux couleurs
+  formulaire: FormGroup;
+
   private colorsSub: Subscription;
 
   @ViewChild('couleurInput') couleurInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
-  constructor(public PaintsService: PaintsService, public ColorsService: ColorsService, public route: ActivatedRoute) {
+  constructor(
+    public PaintsService: PaintsService, 
+    public ColorsService: ColorsService, 
+    public route: ActivatedRoute,
+    public cdr: ChangeDetectorRef) {
     this.filteredCouleurs = this.couleurCtrl.valueChanges.pipe(
       startWith(null),
       map((color: string | null) => color ? this._filter(color) : this.allCouleurs.slice()));
   }
 
-  //Suppression d'un élément
-  remove(fruit: string): void {
-    const index = this.couleurs.indexOf(fruit);
+  remove(color: string): void {
+    const index = this.couleurs.indexOf(color);
 
-    if (index >= 0) {
-      this.couleurs.splice(index, 1);
-    }
+    if (index >= 0) this.couleurs.splice(index, 1);
   }
 
-  //Ajoute un élément sélectionné
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.couleurs.push(value.trim());
-    }
+    if ((value || '').trim()) this.couleurs.push(value.trim());
 
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
+    if (input) input.value = '';
 
     this.couleurCtrl.setValue(null);
   }
@@ -92,7 +80,6 @@ export class PaintEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    //Initialisation du formulaire
     this.formulaire = new FormGroup({
       name: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)]
@@ -105,20 +92,17 @@ export class PaintEditComponent implements OnInit {
       })
     });
 
-    //Demande récupération des couleurs
     this.ColorsService.getColors();
 
-    //Gestion de la récupération des couleurs
     this.colorsSub = this.ColorsService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[] }) => {
-        //Récupération des posts
         this.colors = colorData.color;
         this.allCouleurs = this.colors.map(a => a.name);
+
+        if(this.instruction) this.displayColor(this.instruction.paintID);
       })
 
-    //Récupération de l'ID de la figurine
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      //Recherche de la présence d'un ID
       if (paramMap.has("instructionID")) {
         this.InstructionID = paramMap.get('instructionID');
 
@@ -132,42 +116,47 @@ export class PaintEditComponent implements OnInit {
             step: instructionData.step
           }
 
-          //MAJ du formulaire
           this.formulaire.setValue({
             name: this.instruction.name,
             content: this.instruction.content,
             step: this.instruction.step
           });
 
-          //MAJ de la selection des couleurs
-          for(let i = 0 ; i < this.instruction.paintID.length ; i++){
-            this.couleurs.push(this.colors.find(e => e.id === this.instruction.paintID[i]).name)
+          if(this.colors.length != 0){
+            for(let i = 0 ; i < this.instruction.paintID.length ; i++){
+              this.couleurs.push(this.colors.find(e => e.id === this.instruction.paintID[i]).name)
+            }
           }
         });
       }
     });
   }
 
+  displayColor(colorIDs: any[]){
+    if(this.colors){
+      for(let i = 0 ; i < colorIDs.length ; i++){
+        const colorName = this.colors.find(e => e.id == colorIDs[i]).name;
+        this.couleurs.push(colorName);
+        this.couleurInput.nativeElement.value = '';
+        this.couleurCtrl.setValue(null);
+      }
+    }
+  }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allCouleurs.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.allCouleurs.filter(color => color.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  //Gestion du click
   onSaveInstruction() {
-    //Vérification de la validité du formulaire
-    if (this.formulaire.invalid) {
-      return;
-    }
+    if (this.formulaire.invalid) return;
 
-    //Recherche des ID des couleurs selectionnées
     let colorsID = [];
     for (let i = 0; i < this.couleurs.length; i++) {
       colorsID.push(this.colors[this.colors.findIndex(o => o.name === this.couleurs[i])].id);
     }
 
-    //Vérification du mode
     this.PaintsService.updateInstruction(this.InstructionID, this.formulaire.value.name, this.formulaire.value.content, this.instruction.figurineID, colorsID, this.formulaire.value.step);
   }
 }

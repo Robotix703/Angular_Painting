@@ -30,7 +30,7 @@
     <!--Choix des couleurs-->
     <mat-form-field class="example-chip-list">
       <mat-label>Couleurs</mat-label>
-      <mat-chip-list #chipList aria-label="Selection de la peinture">
+      <mat-chip-list #chipList aria-label="Selection de la peinture" [multiple]="true">
         <mat-chip *ngFor="let couleur of couleurs" [selectable]="selectable" [removable]="removable"
           (removed)="remove(couleur)">
           {{couleur}}
@@ -41,8 +41,8 @@
           (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-        <mat-option *ngFor="let fruit of filteredCouleurs | async" [value]="fruit">
-          {{fruit}}
+        <mat-option *ngFor="let color of filteredCouleurs | async" [value]="color">
+          {{color}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
