@@ -77,13 +77,10 @@ export class PaintListComponent implements OnInit, OnDestroy {
     });
 
     this.instructionsSub = this.paintService.getInstructionUpdateListener()
-      .subscribe((instructionData: { instructions: Instruction[], maxInstruction: number }) => {
-        //Récupération des posts
+      .subscribe((instructionData: { instructions: Instruction[], maxInstructions: number }) => {
         this.instructions = instructionData.instructions.sort(this.compare);
-        //MAJ du nombre max de posts
-        this.totalInstructions = instructionData.maxInstruction;
+        this.totalInstructions = instructionData.maxInstructions;
 
-        //Récupération des couleurs
         this.ColorsService.getColors();
       });
 

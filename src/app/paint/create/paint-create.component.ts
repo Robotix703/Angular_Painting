@@ -24,7 +24,6 @@ import { Color } from 'src/app/color/color.model';
   styleUrls: ['./paint-create.component.css']
 })
 
-// Composant
 export class PaintCreateComponent implements OnInit {
 
   visible = true;
@@ -36,57 +35,44 @@ export class PaintCreateComponent implements OnInit {
   couleurs: string[] = [];
   allCouleurs: string[] = [];
 
-  //ID
   private InstructionID: string;
-  //Instruction à modifier
   instruction: Instruction;
-
-  //Figurine ID
   figurineID = "";
-
-  //Formulaire
-  formulaire: FormGroup;
-
-  //Color
   colors = [];
+  nextInstruc = 0;
 
-  //Abonnement aux couleurs
+  formulaire: FormGroup;
   private colorsSub: Subscription;
+  private instrucSub: Subscription;
 
   @ViewChild('couleurInput') couleurInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
-  constructor(public PaintsService: PaintsService, public ColorsService: ColorsService, public route: ActivatedRoute) {
+  constructor(
+    public PaintsService: PaintsService,
+    public ColorsService: ColorsService,
+    public route: ActivatedRoute
+    ) {
     this.filteredCouleurs = this.couleurCtrl.valueChanges.pipe(
       startWith(null),
       map((color: string | null) => color ? this._filter(color) : this.allCouleurs.slice()));
   }
 
-  //Ajoute un élément sélectionné
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.couleurs.push(value.trim());
-    }
+    if ((value || '').trim()) this.couleurs.push(value.trim());
 
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
+    if (input) input.value = '';
 
     this.couleurCtrl.setValue(null);
   }
 
-  //Suppression d'un élément
   remove(fruit: string): void {
     const index = this.couleurs.indexOf(fruit);
 
-    if (index >= 0) {
-      this.couleurs.splice(index, 1);
-    }
+    if (index >= 0) this.couleurs.splice(index, 1);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -102,7 +88,6 @@ export class PaintCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    //Initialisation du formulaire
     this.formulaire = new FormGroup({
       name: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)]
@@ -115,34 +100,30 @@ export class PaintCreateComponent implements OnInit {
       })
     });
 
-    //Demande récupération des couleurs
     this.ColorsService.getColors();
 
-    //Gestion de la récupération des couleurs
     this.colorsSub = this.ColorsService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[] }) => {
-        //Récupération des posts
         this.colors = colorData.color;
         this.allCouleurs = this.colors.map(a => a.name);
       })
 
-    //Récupération de l'ID de la figurine
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      //Recherche de la présence d'un ID
-      if (paramMap.has("figurineID")) {
-        this.figurineID = paramMap.get('figurineID');
-      }
+      if (paramMap.has("figurineID")) this.figurineID = paramMap.get('figurineID');
+      this.PaintsService.getInstructions(this.figurineID);
     });
+
+    this.instrucSub = this.PaintsService.getInstructionUpdateListener()
+      .subscribe((instructionData: { instructions: Instruction[], maxInstructions: number }) => {
+        this.formulaire.patchValue({step: instructionData.maxInstructions + 1});
+      });
   }
 
-  //Gestion du click
-  onSaveInstruction() {
-    //Vérification de la validité du formulaire
-    if (this.formulaire.invalid) {
-      return;
-    }
+  
 
-    //Recherche des ID des couleurs selectionnées
+  onSaveInstruction() {
+    if (this.formulaire.invalid) return;
+
     let colorsID = [];
     for(let i = 0 ; i < this.couleurs.length ; i++)
     {

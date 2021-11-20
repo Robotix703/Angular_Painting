@@ -1,41 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http"
 import { map } from 'rxjs/operators'
-
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-//Variables globales
 import { environment } from "../../environments/environment";
+
 import { Instruction } from './paint.model';
 
 const URL_BACKEND = environment.apiURL + "paint/";
 
 @Injectable({ providedIn: 'root' })
 
-//Gestion des Peintures
 export class PaintsService {
 
-  //Mémoire interne des instructions
   private instructions: Instruction[] = [];
-
-  //Système de mise à jour des instruction
-  private instructionUpdated = new Subject<{ instructions: Instruction[] }>();
+  private instructionUpdated = new Subject<{ instructions: Instruction[], maxInstructions: number }>();
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  //Permet de s'abonner aux événement sur les figurines
   getInstructionUpdateListener() {
     return this.instructionUpdated.asObservable();
   }
 
-  //Récupération des instructions
   getInstructions(figurineID: string) {
-    //Construction query
     const queryParams = `?figurineID=${figurineID}`;
 
-    //Récupération des instructions
-    this.http.get<{ Instructions: any }>(URL_BACKEND + queryParams)
-      //Ajout d'une opération sur les données
+    this.http.get<{ Instructions: any, maxInstructions: number }>(URL_BACKEND + queryParams)
       .pipe(map((data) => {
         return {
           instructions: data.Instructions.map(instruction => {
@@ -47,18 +37,17 @@ export class PaintsService {
               paintID: instruction.paintID,
               step: instruction.step
             }
-          })
+          }),
+          maxInstructions: data.maxInstructions
         }
       }))
       .subscribe((transformedInstructions) => {
         this.instructions = transformedInstructions.instructions;
-        this.instructionUpdated.next({ instructions: [...this.instructions] });
+        this.instructionUpdated.next({ instructions: [...this.instructions], maxInstructions: transformedInstructions.maxInstructions });
       });
   }
 
-  //Sauvegarde d'une instruction
   writeInstruction(name: string, content: string, figurineID: string, paintID: string[], step: number) {
-    //Stockage image et données
     const instructionData = {
       name: name,
       content: content,
@@ -67,28 +56,21 @@ export class PaintsService {
       step: step
     }
 
-    //Requête POST
     this.http.post<Instruction>(URL_BACKEND, instructionData)
       .subscribe((responseData: Instruction) => {
-        //Redirection de l'utilisateur
         this.router.navigate(["/paint/" + figurineID]);
       });
   }
 
-  //Demande de destruction des données au niveau de la BDD
   deleteInstruction(instructionID: string) {
-    //Requête DELTE
     return this.http.delete(URL_BACKEND + instructionID);
   }
 
-  //Récupération d'une instruction
   getInstruction(id: string) {
     return this.http.get<{ _id: string, name: string, content: string, figurineID: string, paintID: [string], step: number }>(URL_BACKEND + id);
   }
 
-  //MAJ instruction
   updateInstruction(id: string, name: string, content: string, figurineID: string, paintID: string[], step: number) {
-    //Initialisation
     let instructionData = {
       id: id,
       name: name,
@@ -98,10 +80,8 @@ export class PaintsService {
       step: step
     }
 
-    //Appel AJAX
     this.http.put(URL_BACKEND + id, instructionData)
       .subscribe(reponse => {
-        //Redirection de l'utilisateur
         this.router.navigate(["/paint/" + figurineID]);
       });
   }
