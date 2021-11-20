@@ -5,7 +5,7 @@
   <span class="spacer"></span>
   <ul>
     <li>
-      <a routerLink="/create">Créer figurine</a>
+      <a routerLink="/">Figurine</a>
     </li>
     <li>
       <span class="spacer" style="visibility: hidden;">TTT</span>
@@ -23,15 +23,12 @@
 
   <ul>
     <li *ngIf="!userIsAuthenticated">
-      <!--routerLinkActive s'active quand la page en question est la page courant (ici create)-->
       <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent">Connexion</a>
     </li>
     <li *ngIf="!userIsAuthenticated">
-      <!--routerLinkActive s'active quand la page en question est la page courant (ici create)-->
       <a mat-button routerLink="/auth/signup" routerLinkActive="mat-accent">Inscription</a>
     </li>
     <li *ngIf="userIsAuthenticated">
-      <!--routerLinkActive s'active quand la page en question est la page courant (ici create)-->
       <button mat-button (click)="onLogout()">Déconnexion</button>
     </li>
   </ul>

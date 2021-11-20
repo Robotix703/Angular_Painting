@@ -1,3 +1,7 @@
+<div style="text-align: center;">
+  <a mat-raised-button color="primary" routerLink="/create">Créer figurine</a>
+</div>
+
 <mat-accordion *ngIf="figurines.length > 0 && !isLoading">
   <!--Conteneur des tuiles par figurines-->
   <mat-card *ngFor="let figurine of figurines">

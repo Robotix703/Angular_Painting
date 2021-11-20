@@ -69,8 +69,8 @@ export class PaintCreateComponent implements OnInit {
     this.couleurCtrl.setValue(null);
   }
 
-  remove(fruit: string): void {
-    const index = this.couleurs.indexOf(fruit);
+  remove(color: string): void {
+    const index = this.couleurs.indexOf(color);
 
     if (index >= 0) this.couleurs.splice(index, 1);
   }
@@ -84,7 +84,7 @@ export class PaintCreateComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allCouleurs.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.allCouleurs.filter(color => color.toLowerCase().indexOf(filterValue) === 0);
   }
 
   ngOnInit() {
@@ -100,7 +100,7 @@ export class PaintCreateComponent implements OnInit {
       })
     });
 
-    this.ColorsService.getColors();
+    this.ColorsService.getColors(500);
 
     this.colorsSub = this.ColorsService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[] }) => {
@@ -117,9 +117,7 @@ export class PaintCreateComponent implements OnInit {
       .subscribe((instructionData: { instructions: Instruction[], maxInstructions: number }) => {
         this.formulaire.patchValue({step: instructionData.maxInstructions + 1});
       });
-  }
-
-  
+  }  
 
   onSaveInstruction() {
     if (this.formulaire.invalid) return;

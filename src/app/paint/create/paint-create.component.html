@@ -41,8 +41,8 @@
           (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-        <mat-option *ngFor="let fruit of filteredCouleurs | async" [value]="fruit">
-          {{fruit}}
+        <mat-option *ngFor="let color of filteredCouleurs | async" [value]="color">
+          {{color}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>

@@ -60,8 +60,8 @@ export class ColorsService {
     return this.colorUpdated.asObservable();
   }
 
-  getColors() {
-    this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + '?limit=' + this.colorLimite)
+  getColors(colorLimite: number = this.colorLimite) {
+    this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + '?limit=' + colorLimite)
       .pipe(map((data) => {
         return {
           colors: data.Colors.map(color => {
