@@ -85,7 +85,9 @@ export class ColorListComponent implements OnInit, OnDestroy {
     this.colorService.updateToBuy(
       color.id,
       (color.toBuy == true)? false : true
-    )
+    ).subscribe(() => {
+      this.colorService.getColorsFiltre(this.l_gamme, this.l_type, this.l_toBuy);
+    });
   }
 
   ngOnDestroy() {

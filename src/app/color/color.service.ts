@@ -57,10 +57,7 @@ export class ColorsService {
   }
 
   updateToBuy(id:string, toBuy: Boolean) {
-    this.http.post<Color>(URL_BACKEND + "/toBuy", {id: id, toBuy: toBuy})
-      .subscribe((responseData: Color) => {
-        this.getColors();
-      });
+    return this.http.post<Color>(URL_BACKEND + "/toBuy", {id: id, toBuy: toBuy});
   }
 
   getColorUpdateListener() {
