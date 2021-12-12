@@ -32,6 +32,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
   showFiller = true;
   l_gamme = "";
   l_type = "";
+  l_toBuy = "false";
   l_colorLimit = "100";
   gammeList: string[] = colorGammes;
   colorList: string[] = colorTypes;
@@ -75,7 +76,7 @@ export class ColorListComponent implements OnInit, OnDestroy {
       this.drawerService.freeSlot(slot, drawerName);
 
       this.colorService.deleteColor(colorID).subscribe(() => {
-        this.colorService.getColors(parseInt(this.l_colorLimit));
+        this.colorService.getColorsFiltre(this.l_gamme, this.l_type, this.l_toBuy);
       });
     }
   }
@@ -101,17 +102,19 @@ export class ColorListComponent implements OnInit, OnDestroy {
   selectGamme(gamme: string){
     this.l_gamme = (gamme == "tout" ? "" : gamme);
 
-    this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
+    this.colorService.getColorsFiltre(this.l_gamme, this.l_type, this.l_toBuy);
   }
 
   selectType(type: string){
     this.l_type = (type == "tout" ? "" : type);
 
-    this.colorService.getColorsFiltre(this.l_gamme, this.l_type);
+    this.colorService.getColorsFiltre(this.l_gamme, this.l_type, this.l_toBuy);
   }
 
   selectToBuy(toBuy: any){
-    this.colorService.getColorsToBuy(toBuy.checked);
+    this.l_toBuy = (toBuy.checked == true) ? "true" : "false";
+
+    this.colorService.getColorsFiltre(this.l_gamme, this.l_type, this.l_toBuy);
   }
 
   search(event){

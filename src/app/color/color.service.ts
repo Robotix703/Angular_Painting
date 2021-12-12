@@ -87,38 +87,8 @@ export class ColorsService {
       });
   }
 
-  getColorsFiltre(gamme: string, type: string) {
-    const queryParams = `filtre?gamme=${gamme}&type=${type}&limit=${this.colorLimite}`;
-
-    this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + queryParams)
-      .pipe(map((data) => {
-        return {
-          colors: data.Colors.map(color => {
-            return {
-              id: color._id,
-              name: color.name,
-              gamme: color.gamme,
-              type: color.type,
-              colorCode: color.colorCode,
-              drawerName: color.drawerName,
-              positionX: color.positionX,
-              positionY: color.positionY,
-              toBuy: color.toBuy ? color.toBuy : false,
-              backgroundToBuy: color.toBuy ? "#cbd800" : undefined
-            }
-          }),
-          maxColors : data.maxColors
-        }
-      }))
-      .subscribe((transformedColor) => {
-        this.color = transformedColor.colors;
-        this.colorUpdated.next({ color: [...this.color], maxColors: transformedColor.maxColors });
-      });
-  }
-
-  getColorsToBuy(toBuy: boolean) {
-    const l_toBuy = toBuy ? "true" : "false";
-    const queryParams = `toBuy?toBuy=${l_toBuy}`;
+  getColorsFiltre(gamme: string, type: string, toBuy) {
+    const queryParams = `filtre?gamme=${gamme}&type=${type}&toBuy=${toBuy}&limit=${this.colorLimite}`;
 
     this.http.get<{ Colors: any, maxColors: number }>(URL_BACKEND + queryParams)
       .pipe(map((data) => {
