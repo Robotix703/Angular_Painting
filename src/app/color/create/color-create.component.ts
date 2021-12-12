@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { Color } from '../color.model';
+import { Color, colorGammes, colorTypes } from '../color.model';
 import { ColorsService } from '../color.service';
 import { DrawersService } from 'src/app/drawer/drawer.service';
 import { coordDrawerArmy, coordDrawerCitadel, Drawer, DrawerTypes } from 'src/app/drawer/drawer.model';
@@ -42,22 +42,19 @@ export class ColorCreateComponent implements OnInit {
   constructor(public ColorsService: ColorsService, public route: ActivatedRoute, public DrawersService: DrawersService) { }
 
   //Gestion des options
-  gammes: string[] = ['Citadel', 'Army Painter', 'Air Printer'];
   filteredGamme: Observable<string[]>;
-
-  types: string[] = ['Air', 'Dry', 'Base', 'Layer', 'Contrast', 'Shader', 'Texture', 'Dry', 'Technical', 'Glaze'];
   filteredTypes: Observable<string[]>;
 
   private _filterGammes(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.gammes.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return colorGammes.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   private _filterTypes(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.types.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return colorTypes.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   private _filterDrawers(value: string): string[] {

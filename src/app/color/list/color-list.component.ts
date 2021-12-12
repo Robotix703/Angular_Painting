@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/auth.service';
 import { coordDrawerArmy, coordDrawerCitadel, DrawerTypes } from 'src/app/drawer/drawer.model';
-import { Color } from '../color.model';
+import { Color, colorGammes, colorTypes } from '../color.model';
 import { ColorsService } from '../color.service';
 import { DrawersService } from 'src/app/drawer/drawer.service';
 
@@ -33,6 +33,8 @@ export class ColorListComponent implements OnInit, OnDestroy {
   l_gamme = "";
   l_type = "";
   l_colorLimit = "100";
+  gammeList: string[] = colorGammes;
+  colorList: string[] = colorTypes;
 
   //Abonnement
   private authStatusSub: Subscription;

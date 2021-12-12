@@ -82,9 +82,7 @@
       <mat-label>Selectionner une gamme</mat-label>
       <mat-select #gammeValue (selectionChange)="selectGamme($event.value)">
         <mat-option value="tout">Tout</mat-option>
-        <mat-option value="Citadel">Citadel</mat-option>
-        <mat-option value="Army Painter">Army Painter</mat-option>
-        <mat-option value="Air Printer">Air Printer</mat-option>
+        <mat-option *ngFor="let gamme of gammeList" [value]="gamme">{{gamme}}</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -94,16 +92,7 @@
       <mat-label>Selectionner une type</mat-label>
       <mat-select #typeValue (selectionChange)="selectType($event.value)">
         <mat-option value="tout">Tout</mat-option>
-        <mat-option value="Air">Air</mat-option>
-        <mat-option value="Dry">Dry</mat-option>
-        <mat-option value="Base">Base</mat-option>
-        <mat-option value="Layer">Layer</mat-option>
-        <mat-option value="Contrast">Contrast</mat-option>
-        <mat-option value="Shader">Shader</mat-option>
-        <mat-option value="Texture">Texture</mat-option>
-        <mat-option value="Dry">Dry</mat-option>
-        <mat-option value="Technical">Technical</mat-option>
-        <mat-option value="Glaze">Glaze</mat-option>
+        <mat-option *ngFor="let color of colorList" [value]="color">{{color}}</mat-option>
       </mat-select>
     </mat-form-field>
 

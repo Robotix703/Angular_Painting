@@ -28,3 +28,11 @@ export class colorHTMLDisplay {
     return this.html;
   }
 }
+
+export const colorGammes = [
+  'Citadel', 'Army Painter', 'Air Printer'
+]
+
+export const colorTypes = [
+  'Air', 'Dry', 'Base', 'Layer', 'Contrast', 'Shader', 'Texture', 'Dry', 'Technical', 'Glaze', 'Spray'
+]
