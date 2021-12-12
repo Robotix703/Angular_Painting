@@ -3,6 +3,8 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'; //Gestion des formulaires
 import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '../angular-material.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 import { FigurineCreateComponent } from './create/figurine-create.component';
 import { FigurineListComponent } from './list/figurine-list.component';
 
@@ -17,7 +19,8 @@ import { FigurineListComponent } from './list/figurine-list.component';
         ReactiveFormsModule,
         FormsModule,
         AngularMaterialModule,
-        RouterModule
+        RouterModule,
+        MatPaginatorModule
     ]
 })
 export class FigurineModule {}

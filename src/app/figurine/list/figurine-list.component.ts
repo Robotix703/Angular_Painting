@@ -1,5 +1,7 @@
 // Importation de l'outil composant de Angular
+import { ContentObserver } from '@angular/cdk/observers';
 import { Component, OnDestroy, OnInit } from '@angular/core'
+import { PageEvent } from '@angular/material/paginator';
 
 //gestion des abonnements
 import { Subscription } from 'rxjs';
@@ -26,9 +28,10 @@ export class FigurineListComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   userId = null;
 
-  totalFigurines = 0;
-  figurinePerPage = 10;
-  currentPage = 0;
+  pageSizeOptions:number[] = [10, 25, 50, 100];
+  pageSize:number = 10;
+  length:number;
+  currentPage: number = 0;
 
   //Abonnement
   private authStatusSub: Subscription;
@@ -38,11 +41,11 @@ export class FigurineListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.figurineService.getFigurines(10, 1);
+    this.figurineService.getFigurines(this.pageSize, this.currentPage);
 
     this.figurinesSub = this.figurineService.getFigurineUpdateListener().subscribe((figurineData: { figurines: Figurine[], maxFigurines: number }) => {
       this.figurines = figurineData.figurines;
-      this.totalFigurines = figurineData.maxFigurines;
+      this.length = figurineData.maxFigurines;
       this.isLoading = false;
     });
 
@@ -59,7 +62,7 @@ export class FigurineListComponent implements OnInit, OnDestroy {
     if(this.clickMethod(figurineName))
     {
       this.figurineService.deleteFigurine(figurineID).subscribe(() => {
-        this.figurineService.getFigurines(this.figurinePerPage, this.currentPage)
+        this.figurineService.getFigurines(this.pageSize, this.currentPage)
       });
     }
   }
@@ -70,5 +73,10 @@ export class FigurineListComponent implements OnInit, OnDestroy {
 
   clickMethod(name: string) {
     return confirm("Confirmez la suppression de " + name);
+  }
+
+  getFigurinesData(event?:PageEvent){
+    this.figurineService.getFigurines(event.pageSize, event.pageIndex);
+    this.currentPage = event.pageIndex;
   }
 }

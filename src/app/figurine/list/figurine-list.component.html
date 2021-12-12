@@ -2,6 +2,13 @@
   <a mat-raised-button color="primary" routerLink="/create">Créer figurine</a>
 </div>
 
+<mat-paginator [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="getFigurinesData($event)">
+</mat-paginator>
+
+
 <mat-accordion *ngIf="figurines.length > 0 && !isLoading">
   <!--Conteneur des tuiles par figurines-->
   <mat-card *ngFor="let figurine of figurines">
