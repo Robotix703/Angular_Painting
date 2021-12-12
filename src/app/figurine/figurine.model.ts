@@ -8,4 +8,10 @@ export interface Figurine {
   categorie: string;
   //Chemin vers l'image
   imagePath: string;
+  //Favoris
+  favoris: [string];
+  //isFavoris
+  isFavoris: boolean;
+  //painted
+  painted: boolean;
 }

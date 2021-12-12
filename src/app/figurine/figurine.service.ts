@@ -37,7 +37,9 @@ export class FigurinesService {
               id: figurine._id,
               name: figurine.name,
               categorie: figurine.categorie,
-              imagePath: figurine.imagePath
+              imagePath: figurine.imagePath,
+              favoris: figurine.favoris,
+              painted: figurine.painted
             }
           }),
           maxFigurines: data.maxFigurines
@@ -56,7 +58,7 @@ export class FigurinesService {
 
   //Récupération d'une figurine
   getFigurine(id: string) {
-    return this.http.get<{ _id: string, name: string, categorie: string, imagePath: string, creator: string }>(URL_BACKEND + id);
+    return this.http.get<{ _id: string, name: string, categorie: string, imagePath: string, favoris: [string], painted: boolean }>(URL_BACKEND + id);
   }
 
   //Création de figurine
@@ -92,7 +94,7 @@ export class FigurinesService {
     }
     else {
       //Il n'y a que du text
-      figurineData = { id: id, name: name, categorie: categorie, imagePath: image };
+      figurineData = { id: id, name: name, categorie: categorie, imagePath: image, favoris: undefined, isFavoris: undefined, painted: undefined };
     }
 
     //Appel AJAX
@@ -107,5 +109,17 @@ export class FigurinesService {
   deleteFigurine(figurineId: string) {
     //Requête DELTE
     return this.http.delete(URL_BACKEND + figurineId);
+  }
+
+  updateFavoris(figurineID: string, userID: string, favoris: boolean){
+    return this.http.post<Figurine>(URL_BACKEND + "/favoris", 
+      {figurineID: figurineID, userID: userID, setToFavoris: favoris}
+      );
+  }
+
+  updatePainted(figurineID: string, painted: boolean){
+    return this.http.post<Figurine>(URL_BACKEND + "/updatePainted", 
+      {figurineID: figurineID, isPainted: !painted}
+      );
   }
 }

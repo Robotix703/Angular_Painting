@@ -63,7 +63,10 @@ export class FigurineCreateComponent implements OnInit {
             id: figurineData._id,
             name: figurineData.name,
             categorie: figurineData.categorie,
-            imagePath: figurineData.imagePath
+            imagePath: figurineData.imagePath,
+            isFavoris: undefined,
+            favoris: figurineData.favoris,
+            painted: figurineData.painted
           }
 
           //MAJ du formulaire

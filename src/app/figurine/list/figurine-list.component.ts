@@ -32,6 +32,7 @@ export class FigurineListComponent implements OnInit, OnDestroy {
   pageSize:number = 10;
   length:number;
   currentPage: number = 0;
+  userID: string;
 
   //Abonnement
   private authStatusSub: Subscription;
@@ -41,9 +42,14 @@ export class FigurineListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.userID = this.authService.getUserId();
+
     this.figurineService.getFigurines(this.pageSize, this.currentPage);
 
     this.figurinesSub = this.figurineService.getFigurineUpdateListener().subscribe((figurineData: { figurines: Figurine[], maxFigurines: number }) => {
+      figurineData.figurines.forEach(element => {
+        element.isFavoris = element.favoris.includes(this.userID);
+      });
       this.figurines = figurineData.figurines;
       this.length = figurineData.maxFigurines;
       this.isLoading = false;
@@ -78,5 +84,19 @@ export class FigurineListComponent implements OnInit, OnDestroy {
   getFigurinesData(event?:PageEvent){
     this.figurineService.getFigurines(event.pageSize, event.pageIndex);
     this.currentPage = event.pageIndex;
+  }
+
+  setFavoris(figurineID: string, isFavoris){
+    this.figurineService.updateFavoris(figurineID, this.userID, !isFavoris)
+    .subscribe(() => {
+      this.figurineService.getFigurines(this.pageSize, this.currentPage);
+    });
+  }
+
+  setPainted(figurineID: string, isPainted: boolean){
+    this.figurineService.updatePainted(figurineID, isPainted)
+    .subscribe(() => {
+      this.figurineService.getFigurines(this.pageSize, this.currentPage);
+    })
   }
 }

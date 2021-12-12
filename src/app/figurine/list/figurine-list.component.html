@@ -17,6 +17,34 @@
       <!--Titre-->
       <mat-card-title>
         {{ figurine.name }}
+        <button mat-icon-button 
+          *ngIf="figurine.isFavoris" 
+          color="warn" 
+          style="position: absolute; right: 10px;"
+          (click)="setFavoris(figurine.id, figurine.isFavoris)">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-icon-button 
+          *ngIf="figurine.isFavoris != true" 
+          color="warn" 
+          style="position: absolute; right: 10px;"
+          (click)="setFavoris(figurine.id, figurine.isFavoris)">
+          <mat-icon>favorite_border</mat-icon>
+        </button>
+        <button mat-icon-button 
+          *ngIf="figurine.painted != true"
+          color="primary" 
+          style="position: absolute; right: 40px;" 
+          (click)="setPainted(figurine.id, figurine.painted)">
+          <mat-icon>brush</mat-icon>
+        </button>
+        <button mat-icon-button 
+          *ngIf="figurine.painted"
+          color="primary" 
+          style="position: absolute; right: 40px;" 
+          (click)="setPainted(figurine.id, figurine.painted)">
+          <mat-icon>done</mat-icon>
+        </button>
       </mat-card-title>
 
       <!--Sous titre-->
