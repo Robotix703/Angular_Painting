@@ -54,7 +54,6 @@ export class PaintCreateComponent implements OnInit {
     public route: ActivatedRoute
     ) {
     this.filteredCouleurs = this.couleurCtrl.valueChanges.pipe(
-      startWith(null),
       map((color: string | null) => color ? this._filter(color) : this.allCouleurs.slice()));
   }
 
@@ -100,13 +99,17 @@ export class PaintCreateComponent implements OnInit {
       })
     });
 
-    this.ColorsService.getColors();
-
     this.colorsSub = this.ColorsService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[] }) => {
         this.colors = colorData.color;
         this.allCouleurs = this.colors.map(a => a.name);
+        console.log(this.allCouleurs)
+
+        this.filteredCouleurs = this.couleurCtrl.valueChanges.pipe(
+          map((color: string | null) => color ? this._filter(color) : this.allCouleurs.slice()));
       })
+
+    this.refreshColors();
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("figurineID")) this.figurineID = paramMap.get('figurineID');
@@ -129,5 +132,9 @@ export class PaintCreateComponent implements OnInit {
     }
 
     this.PaintsService.writeInstruction(this.formulaire.value.name, this.formulaire.value.content, this.figurineID, colorsID, this.formulaire.value.step);
+  }
+
+  refreshColors() {
+    this.ColorsService.getColors();
   }
 }
