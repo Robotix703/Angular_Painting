@@ -92,7 +92,7 @@ export class PaintEditComponent implements OnInit {
       })
     });
 
-    this.ColorsService.getColors();
+    this.refreshColors();
 
     this.colorsSub = this.ColorsService.getColorUpdateListener()
       .subscribe((colorData: { color: Color[] }) => {
@@ -158,5 +158,9 @@ export class PaintEditComponent implements OnInit {
     }
 
     this.PaintsService.updateInstruction(this.InstructionID, this.formulaire.value.name, this.formulaire.value.content, this.instruction.figurineID, colorsID, this.formulaire.value.step);
+  }
+
+  refreshColors() {
+    this.ColorsService.getColors();
   }
 }

@@ -103,7 +103,6 @@ export class PaintCreateComponent implements OnInit {
       .subscribe((colorData: { color: Color[] }) => {
         this.colors = colorData.color;
         this.allCouleurs = this.colors.map(a => a.name);
-        console.log(this.allCouleurs)
 
         this.filteredCouleurs = this.couleurCtrl.valueChanges.pipe(
           map((color: string | null) => color ? this._filter(color) : this.allCouleurs.slice()));
