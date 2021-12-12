@@ -16,6 +16,8 @@ export interface Color {
   positionX: number;
   //Position Y dans le tiroir
   positionY: number;
+  //A acheter
+  toBuy: Boolean;
 }
 
 export class colorHTMLDisplay {

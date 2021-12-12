@@ -82,16 +82,9 @@ export class ColorListComponent implements OnInit, OnDestroy {
   }
 
   buyColor(color: Color){
-    this.colorService.updateColor(
+    this.colorService.updateToBuy(
       color.id,
-      color.name,
-      color.gamme,
-      color.type,
-      color.colorCode,
-      color.drawerName,
-      color.positionX,
-      color.positionY,
-      false
+      (color.toBuy == true)? false : true
     )
   }
 
