@@ -17,6 +17,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list'; 
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
     exports: [
@@ -36,7 +37,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatSidenavModule,
         MatSelectModule,
         MatGridListModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatSlideToggleModule
     ]
 })
 

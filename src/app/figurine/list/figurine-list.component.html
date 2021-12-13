@@ -1,5 +1,15 @@
 <div style="text-align: center;">
   <a mat-raised-button color="primary" routerLink="/create">Créer figurine</a>
+  <mat-slide-toggle style="padding-left: 2rem;" (change)="toggleFavoris($event.checked)">Favoris</mat-slide-toggle>
+  <mat-slide-toggle style="padding-left: 2rem;" (change)="toggleDone($event.checked)">Terminé</mat-slide-toggle>
+
+  <mat-form-field appearance="fill" style="padding-left: 2rem;">
+    <mat-label>Catégorie</mat-label>
+    <mat-select #typeValue (selectionChange)="selectCategory($event.value)">
+      <mat-option value="tout">Toutes</mat-option>
+      <mat-option *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <mat-paginator [length]="length"

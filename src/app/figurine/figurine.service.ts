@@ -51,6 +51,10 @@ export class FigurinesService {
       });
   }
 
+  getCategories() {
+    return this.http.get<string[]>(URL_BACKEND + `/categoryList`);
+  }
+
   //Permet de s'abonner aux événement sur les figurines
   getFigurineUpdateListener() {
     return this.figurineUpdated.asObservable();

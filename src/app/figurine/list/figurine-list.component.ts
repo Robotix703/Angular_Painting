@@ -34,6 +34,8 @@ export class FigurineListComponent implements OnInit, OnDestroy {
   currentPage: number = 0;
   userID: string;
 
+  categoryList: string[] = [];
+
   //Abonnement
   private authStatusSub: Subscription;
   private figurinesSub: Subscription;
@@ -53,6 +55,11 @@ export class FigurineListComponent implements OnInit, OnDestroy {
       this.figurines = figurineData.figurines;
       this.length = figurineData.maxFigurines;
       this.isLoading = false;
+    });
+
+    this.figurineService.getCategories()
+    .subscribe((data) => {
+      this.categoryList = data;
     });
 
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -98,5 +105,17 @@ export class FigurineListComponent implements OnInit, OnDestroy {
     .subscribe(() => {
       this.figurineService.getFigurines(this.pageSize, this.currentPage);
     })
+  }
+
+  selectCategory(selectedCategory: string){
+    console.log(selectedCategory);
+  }
+
+  toggleFavoris(value: boolean){
+    console.log(value);
+  }
+
+  toggleDone(value: boolean){
+    console.log(value);
   }
 }
