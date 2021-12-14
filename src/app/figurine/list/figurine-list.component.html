@@ -6,7 +6,7 @@
   <mat-form-field appearance="fill" style="padding-left: 2rem;">
     <mat-label>Catégorie</mat-label>
     <mat-select #typeValue (selectionChange)="selectCategory($event.value)">
-      <mat-option value="tout">Toutes</mat-option>
+      <mat-option value="">Toutes</mat-option>
       <mat-option *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -31,28 +31,28 @@
           *ngIf="figurine.isFavoris" 
           color="warn" 
           style="position: absolute; right: 10px;"
-          (click)="setFavoris(figurine.id, figurine.isFavoris)">
+          (click)="setFavoris(figurine._id, figurine.isFavoris)">
           <mat-icon>favorite</mat-icon>
         </button>
         <button mat-icon-button 
           *ngIf="figurine.isFavoris != true" 
           color="warn" 
           style="position: absolute; right: 10px;"
-          (click)="setFavoris(figurine.id, figurine.isFavoris)">
+          (click)="setFavoris(figurine._id, figurine.isFavoris)">
           <mat-icon>favorite_border</mat-icon>
         </button>
         <button mat-icon-button 
           *ngIf="figurine.painted != true"
           color="primary" 
           style="position: absolute; right: 40px;" 
-          (click)="setPainted(figurine.id, figurine.painted)">
+          (click)="setPainted(figurine._id, figurine.painted)">
           <mat-icon>brush</mat-icon>
         </button>
         <button mat-icon-button 
           *ngIf="figurine.painted"
           color="primary" 
           style="position: absolute; right: 40px;" 
-          (click)="setPainted(figurine.id, figurine.painted)">
+          (click)="setPainted(figurine._id, figurine.painted)">
           <mat-icon>done</mat-icon>
         </button>
       </mat-card-title>
@@ -71,9 +71,9 @@
 
     <!--Boutons d'actions-->
     <mat-card-actions>
-      <a mat-button color="primary" [routerLink]="['/paint', figurine.id]">Peindre</a>
-      <a mat-button color="secondary" [routerLink]="['/edit', figurine.id]">Edit</a>
-      <button mat-button color="warn" (click)="onDelete(figurine.id)">Delete</button>
+      <a mat-button color="primary" [routerLink]="['/paint', figurine._id]">Peindre</a>
+      <a mat-button color="secondary" [routerLink]="['/edit', figurine._id]">Edit</a>
+      <button mat-button color="warn" (click)="onDelete(figurine._id)">Delete</button>
     </mat-card-actions>
   </mat-card>
 </mat-accordion>

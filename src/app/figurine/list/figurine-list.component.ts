@@ -1,5 +1,6 @@
 // Importation de l'outil composant de Angular
 import { ContentObserver } from '@angular/cdk/observers';
+import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { PageEvent } from '@angular/material/paginator';
 
@@ -32,7 +33,11 @@ export class FigurineListComponent implements OnInit, OnDestroy {
   pageSize:number = 10;
   length:number;
   currentPage: number = 0;
+
   userID: string;
+  isDone: boolean = undefined;
+  isFavoris: boolean = undefined;
+  category: string = "";
 
   categoryList: string[] = [];
 
@@ -46,15 +51,8 @@ export class FigurineListComponent implements OnInit, OnDestroy {
 
     this.userID = this.authService.getUserId();
 
-    this.figurineService.getFigurines(this.pageSize, this.currentPage);
-
-    this.figurinesSub = this.figurineService.getFigurineUpdateListener().subscribe((figurineData: { figurines: Figurine[], maxFigurines: number }) => {
-      figurineData.figurines.forEach(element => {
-        element.isFavoris = element.favoris.includes(this.userID);
-      });
-      this.figurines = figurineData.figurines;
-      this.length = figurineData.maxFigurines;
-      this.isLoading = false;
+    this.figurineService.getFigurines(this.pageSize, this.currentPage).subscribe((data) => {
+      this.displayFigurines(data.figurines, data.maxFigurines);
     });
 
     this.figurineService.getCategories()
@@ -75,9 +73,24 @@ export class FigurineListComponent implements OnInit, OnDestroy {
     if(this.clickMethod(figurineName))
     {
       this.figurineService.deleteFigurine(figurineID).subscribe(() => {
-        this.figurineService.getFigurines(this.pageSize, this.currentPage)
+        this.figurineService.getFigurines(this.pageSize, this.currentPage).subscribe((data) => {
+          this.displayFigurines(data.figurines, data.maxFigurines);
+        });
       });
     }
+  }
+
+  displayFigurines(figurines: Figurine[], maxFigurines: number){
+    if(figurines){
+      figurines.forEach(element => {
+        element.isFavoris = element.favoris.includes(this.userID);
+      });
+    }
+    
+    this.figurines = (figurines)? figurines : [];
+    this.length = maxFigurines;
+    this.isLoading = false;
+    this.currentPage = 0;
   }
 
   ngOnDestroy() {
@@ -89,33 +102,52 @@ export class FigurineListComponent implements OnInit, OnDestroy {
   }
 
   getFigurinesData(event?:PageEvent){
-    this.figurineService.getFigurines(event.pageSize, event.pageIndex);
+    this.figurineService.getFigurines(event.pageSize, event.pageIndex).subscribe((data) => {
+      this.displayFigurines(data.figurines, data.maxFigurines);
+    });
     this.currentPage = event.pageIndex;
   }
 
   setFavoris(figurineID: string, isFavoris){
     this.figurineService.updateFavoris(figurineID, this.userID, !isFavoris)
     .subscribe(() => {
-      this.figurineService.getFigurines(this.pageSize, this.currentPage);
+      this.figurineService.getFigurines(this.pageSize, this.currentPage).subscribe((data) => {
+        this.displayFigurines(data.figurines, data.maxFigurines);
+      });
     });
   }
 
   setPainted(figurineID: string, isPainted: boolean){
     this.figurineService.updatePainted(figurineID, isPainted)
     .subscribe(() => {
-      this.figurineService.getFigurines(this.pageSize, this.currentPage);
+      this.figurineService.getFigurines(this.pageSize, this.currentPage).subscribe((data) => {
+        this.displayFigurines(data.figurines, data.maxFigurines);
+      });
     })
   }
 
   selectCategory(selectedCategory: string){
-    console.log(selectedCategory);
+    this.category = selectedCategory;
+    const userIDForFavoris = (this.isFavoris) ? this.userID : "";
+    this.figurineService.getFilteredFigurines(userIDForFavoris, this.isDone, this.category, this.pageSize, this.currentPage).subscribe((data) => {
+      this.displayFigurines(data.Figurines, data.maxFigurines);
+    })
   }
 
   toggleFavoris(value: boolean){
-    console.log(value);
+    this.isFavoris = value;
+    const userIDForFavoris = (this.isFavoris) ? this.userID : "";
+    console.log(userIDForFavoris)
+    this.figurineService.getFilteredFigurines(userIDForFavoris, this.isDone, this.category, this.pageSize, this.currentPage).subscribe((data) => {
+      this.displayFigurines(data.Figurines, data.maxFigurines);
+    })
   }
 
   toggleDone(value: boolean){
-    console.log(value);
+    this.isDone = value;
+    const userIDForFavoris = (this.isFavoris) ? this.userID : "";
+    this.figurineService.getFilteredFigurines(userIDForFavoris, this.isDone, this.category, this.pageSize, this.currentPage).subscribe((data) => {
+      this.displayFigurines(data.Figurines, data.maxFigurines);
+    })
   }
 }

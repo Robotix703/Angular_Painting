@@ -25,30 +25,9 @@ export class FigurinesService {
 
   //Retourne une copie des figurines
   getFigurines(figurinesPerPage: number, currentPage: number) {
-    //Paramètre de la requête
     const queryParams = `?pageSize=${figurinesPerPage}&currentPage=${currentPage}`;
 
-    this.http.get<{ figurines: any, maxFigurines: number }>(URL_BACKEND + queryParams)
-      //Ajout d'une opération sur les données
-      .pipe(map((data) => {
-        return {
-          figurines: data.figurines.map(figurine => {
-            return {
-              id: figurine._id,
-              name: figurine.name,
-              categorie: figurine.categorie,
-              imagePath: figurine.imagePath,
-              favoris: figurine.favoris,
-              painted: figurine.painted
-            }
-          }),
-          maxFigurines: data.maxFigurines
-        }
-      }))
-      .subscribe((transformedFigurines) => {
-        this.figurines = transformedFigurines.figurines;
-        this.figurineUpdated.next({ figurines: [...this.figurines], maxFigurines: transformedFigurines.maxFigurines });
-      });
+    return this.http.get<{ figurines: any, maxFigurines: number }>(URL_BACKEND + queryParams);
   }
 
   getCategories() {
@@ -116,7 +95,7 @@ export class FigurinesService {
   }
 
   updateFavoris(figurineID: string, userID: string, favoris: boolean){
-    return this.http.post<Figurine>(URL_BACKEND + "/favoris", 
+    return this.http.post<Figurine>(URL_BACKEND + "favoris", 
       {figurineID: figurineID, userID: userID, setToFavoris: favoris}
       );
   }
@@ -125,5 +104,11 @@ export class FigurinesService {
     return this.http.post<Figurine>(URL_BACKEND + "/updatePainted", 
       {figurineID: figurineID, isPainted: !painted}
       );
+  }
+
+  getFilteredFigurines(userID: string, isDone: boolean, category: string, figurinesPerPage: number, currentPage: number) {
+    const queryParams = `filtre?pageSize=${figurinesPerPage}&currentPage=${currentPage}&userID=${userID}&isDone=${isDone}&category=${category}`;
+
+    return this.http.get<{ Figurines: any, maxFigurines: number }>(URL_BACKEND + queryParams);
   }
 }
